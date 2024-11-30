@@ -1,22 +1,26 @@
 .charts-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px; /* Aumentato lo spazio tra i grafici */
     justify-content: center;
-    margin: 20px 0;
+    margin: 40px 0; /* Aumentato il margine verticale */
 }
 
 .chart-wrapper {
-    background: rgba(255, 255, 255, 0.85); /* Mantenuto più opaco per leggibilità */
-    padding: 25px;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 35px; /* Aumentato il padding */
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    flex: 1;
+    min-width: 400px; /* Aumentata la larghezza minima */
+    max-width: 500px; /* Aumentata la larghezza massima */
+    height: 400px; /* Altezza fissa per grafici più grandi */
 }
 
 .chart-wrapper h3 {
     text-align: center;
     color: #722F37;
-    margin-bottom: 20px;
-    font-size: 1.3em;
+    margin-bottom: 25px; /* Aumentato il margine sotto il titolo */
+    font-size: 1.5em; /* Aumentata la dimensione del titolo */
     font-weight: 500;
 }

@@ -9,7 +9,41 @@ const markerColors = {
   spirits: '#9370DB'     // Viola per gli spirits
 };
 
-
+// Opzioni comuni per entrambi i grafici
+const commonChartOptions = {
+  scales: {
+      r: {
+          angleLines: {
+              display: true,
+              color: 'rgba(0, 0, 0, 0.3)' // Linee più scure
+          },
+          suggestedMin: 0,
+          suggestedMax: 5,
+          ticks: {
+              stepSize: 1,
+              font: {
+                  size: 14 // Testo più grande
+              },
+              color: '#444' // Colore più scuro
+          },
+          pointLabels: {
+              font: {
+                  size: 16, // Etichette più grandi
+                  weight: '500' // Testo più in grassetto
+              },
+              color: '#333' // Colore più scuro
+          }
+      }
+  },
+  plugins: {
+      legend: {
+          display: false
+      }
+  },
+  layout: {
+      padding: 20 // Più spazio intorno al grafico
+  }
+};
 
 function updateMarkers() {
   console.log("updateMarkers called");
@@ -188,87 +222,55 @@ function showDetails(winery) {
     currentChart.destroy();
   }
   
-  // Grafico delle caratteristiche
-  const ctxChar = document.getElementById('characteristicsChart');
-  new Chart(ctxChar, {
+  // Nel tuo codice dei grafici, aggiungi queste opzioni:
+const ctxChar = document.getElementById('characteristicsChart');
+new Chart(ctxChar, {
     type: 'radar',
     data: {
-      labels: ['Fruttato', 'Agrumato', 'Minerale', 'Floreale'],
-      datasets: [{
-        label: 'Intensità',
-        data: [
-          winery.characteristics.intensity.fruttato || 0,
-          winery.characteristics.intensity.agrumato || 0,
-          winery.characteristics.intensity.minerale || 0,
-          winery.characteristics.intensity.floreale || 0
-        ],
-        fill: true,
-        backgroundColor: 'rgba(114, 47, 55, 0.2)',
-        borderColor: '#722F37',
-        pointBackgroundColor: '#722F37',
-      }]
+        labels: ['Fruttato', 'Agrumato', 'Minerale', 'Floreale'],
+        datasets: [{
+            label: 'Intensità',
+            data: [
+                winery.characteristics.intensity.fruttato || 0,
+                winery.characteristics.intensity.agrumato || 0,
+                winery.characteristics.intensity.minerale || 0,
+                winery.characteristics.intensity.floreale || 0
+            ],
+            fill: true,
+            backgroundColor: 'rgba(114, 47, 55, 0.2)',
+            borderColor: '#722F37',
+            borderWidth: 2, // Linea più spessa
+            pointBackgroundColor: '#722F37',
+            pointRadius: 4 // Punti più grandi
+        }]
     },
-    options: {
-      scales: {
-        r: {
-          angleLines: {
-            display: true
-          },
-          suggestedMin: 0,
-          suggestedMax: 5,
-          ticks: {
-            stepSize: 1
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
-    }
-  });
+    options: commonChartOptions
+});
 
-  // Grafico del profilo gustativo
-  const ctxTaste = document.getElementById('tasteChart');
-  new Chart(ctxTaste, {
+// E lo stesso per il grafico del profilo gustativo
+const ctxTaste = document.getElementById('tasteChart');
+new Chart(ctxTaste, {
     type: 'radar',
     data: {
-      labels: ['Dolcezza', 'Acidità', 'Corpo', 'Persistenza'],
-      datasets: [{
-        label: 'Profilo',
-        data: [
-          winery.taste_profile.dolcezza,
-          winery.taste_profile.acidità,
-          winery.taste_profile.corpo,
-          winery.taste_profile.persistenza
-        ],
-        fill: true,
-        backgroundColor: 'rgba(47, 114, 55, 0.2)',
-        borderColor: '#2F7237',
-        pointBackgroundColor: '#2F7237',
-      }]
+        labels: ['Dolcezza', 'Acidità', 'Corpo', 'Persistenza'],
+        datasets: [{
+            label: 'Profilo',
+            data: [
+                winery.taste_profile.dolcezza,
+                winery.taste_profile.acidità,
+                winery.taste_profile.corpo,
+                winery.taste_profile.persistenza
+            ],
+            fill: true,
+            backgroundColor: 'rgba(47, 114, 55, 0.2)',
+            borderColor: '#2F7237',
+            borderWidth: 2, // Linea più spessa
+            pointBackgroundColor: '#2F7237',
+            pointRadius: 4 // Punti più grandi
+        }]
     },
-    options: {
-      scales: {
-        r: {
-          angleLines: {
-            display: true
-          },
-          suggestedMin: 0,
-          suggestedMax: 5,
-          ticks: {
-            stepSize: 1
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
-    }
-  });
+    options: commonChartOptions
+});
 
   panel.style.display = 'block';
   document.body.style.overflow = 'hidden';

@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Mappa Vini Italiani</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mappa Vini Italiani</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" href="css/details.css">
+    <link rel="stylesheet" href="css/countdown.css">
+    <link rel="stylesheet" href="css/charts.css">
 </head>
 <body>
   <div id="countdown">
@@ -13,7 +18,20 @@
     <span>In attesa dell'apertura</span>
   </div>
   <div id="map"></div>
-
+  <div class="map-legend">
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #FFD700"></div>
+      Vini Bianchi
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #87CEEB"></div>
+      Spumanti
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #9370DB"></div>
+      Spirits
+    </div>
+  </div>
   <div class="details-panel" id="detailsPanel">
     <div class="details-header">
       <h2>Dettagli del Vino</h2>
@@ -23,42 +41,7 @@
       <!-- Content will be dynamically inserted here -->
     </div>
   </div>
-
-  <button class="filter-button" onclick="toggleFilters()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>
-    </svg>
-  </button>
-
-  <div class="filter-menu" id="filterMenu">
-    <div class="filter-group">
-      <div class="filter-title">Tipologia</div>
-      <label class="filter-option">
-        <input type="checkbox" name="type" value="bianco" onchange="updateMarkers()"> Bianchi fermi
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" name="type" value="spumante" onchange="updateMarkers()"> Spumanti
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" name="type" value="spirits" onchange="updateMarkers()"> Spiriti
-      </label>
-    </div>
-    <div class="filter-group">
-      <div class="filter-title">Caratteristiche</div>
-      <label class="filter-option">
-        <input type="checkbox" name="characteristic" value="minerale" onchange="updateMarkers()"> Minerale
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" name="characteristic" value="fruttato" onchange="updateMarkers()"> Fruttato
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" name="characteristic" value="floreale" onchange="updateMarkers()"> Floreale
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" name="characteristic" value="agrumato" onchange="updateMarkers()"> Agrumato
-      </label>
-    </div>
-  </div>
+  
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

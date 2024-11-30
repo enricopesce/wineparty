@@ -1,0 +1,22 @@
+.charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.chart-wrapper {
+    background: rgba(255, 255, 255, 0.85); /* Mantenuto più opaco per leggibilità */
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.chart-wrapper h3 {
+    text-align: center;
+    color: #722F37;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    font-weight: 500;
+}

@@ -3,25 +3,71 @@ let currentChart = null;
 const countdownElement = document.getElementById('countdown');
 const mapElement = document.getElementById('map');
 
-function updateCountdown() {
-  const now = new Date();
-  const diff = unlockDate - now;
+const markerColors = {
+  bianco: '#FFD700',     // Oro per i vini bianchi
+  spumante: '#87CEEB',   // Azzurro per gli spumanti
+  spirits: '#9370DB'     // Viola per gli spirits
+};
 
-  if (diff <= 0) {
-    countdownElement.style.display = 'none';
-    mapElement.style.display = 'block';
-    initMap();
-    return true;
+
+
+function updateMarkers() {
+  console.log("updateMarkers called");
+  if (!map) {
+    console.error("Map not initialized!");
+    return;
   }
 
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  countdownElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  return false;
+  console.log("Current wineries:", wineries);  // Verifica che wineries esista e contenga dati
+
+  map.eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      map.removeLayer(layer);
+    }
+  });
+
+  wineries.forEach(winery => {
+    console.log("Creating marker for:", winery.name, "at coordinates:", winery.coordinates);
+    
+    const marker = L.marker(winery.coordinates, {
+      icon: createCustomIcon(winery.type)
+    });
+    
+    marker.bindTooltip(winery.name, {
+      permanent: false,
+      direction: 'top'
+    });
+    
+    marker.on('click', () => showDetails(winery));
+    marker.addTo(map);
+  });
+}
+
+function createCustomIcon(type) {
+  console.log("Creating icon for type:", type, "with color:", markerColors[type]);
+  
+  return L.divIcon({
+    className: 'custom-marker',
+    html: `<div style="
+      position: absolute;
+      background-color: ${markerColors[type]};
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      "></div>`,
+    iconSize: [25, 25],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12]
+  });
 }
 
 function initMap() {
+  console.log("initMap called");
   map = L.map('map', {
     zoomControl: false,
     dragging: !L.Browser.mobile
@@ -36,39 +82,48 @@ function initMap() {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
+  console.log("Calling updateMarkers");
   updateMarkers();
 }
 
 
-function updateMarkers() {
-  map.eachLayer((layer) => {
-    if (layer instanceof L.Marker) {
-      map.removeLayer(layer);
-    }
-  });
+function updateCountdown() {
+  const now = new Date();
+  const diff = unlockDate - now;
 
-  const selectedTypes = [...document.querySelectorAll('input[name="type"]:checked')]
-    .map(cb => cb.value);
-  const selectedCharacteristics = [...document.querySelectorAll('input[name="characteristic"]:checked')]
-    .map(cb => cb.value);
+  if (diff <= 0) {
+    countdownElement.style.display = 'none';
+    mapElement.style.display = 'block';
+    initMap();
+    return true;
+  }
 
-  wineries.forEach(winery => {
-    // Combiniamo caratteristiche primarie e secondarie per il filtro
-    const allCharacteristics = [...winery.characteristics.primary, ...winery.characteristics.secondary];
-    
-    const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(winery.type);
-    const characteristicMatch = selectedCharacteristics.length === 0 || 
-      selectedCharacteristics.some(c => allCharacteristics.includes(c));
-
-    if (typeMatch && characteristicMatch) {
-      const marker = L.marker(winery.coordinates);
-      marker.on('click', () => {
-        showDetails(winery);
-      });
-      marker.addTo(map);
-    }
-  });
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  
+  // Modifica qui: seleziona solo il div interno per il timer
+  const timerDiv = countdownElement.querySelector('div');
+  timerDiv.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  return false;
 }
+
+
+
+function getAllCharacteristics() {
+  const characteristicsSet = new Set();
+  
+  wineries.forEach(winery => {
+    // Add primary characteristics
+    winery.characteristics.primary.forEach(char => characteristicsSet.add(char));
+    // Add secondary characteristics
+    winery.characteristics.secondary.forEach(char => characteristicsSet.add(char));
+  });
+  
+  // Convert Set to sorted array
+  return Array.from(characteristicsSet).sort();
+}
+
 
 function showDetails(winery) {
   const panel = document.getElementById('detailsPanel');
@@ -229,19 +284,6 @@ function closeDetails() {
   }
 }
 
-function toggleFilters() {
-  const menu = document.getElementById('filterMenu');
-  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-}
-
-document.addEventListener('click', function(event) {
-  const menu = document.getElementById('filterMenu');
-  const button = document.querySelector('.filter-button');
-  if (!menu.contains(event.target) && !button.contains(event.target)) {
-    menu.style.display = 'none';
-  }
-});
-
 if (!updateCountdown()) {
   const interval = setInterval(() => {
     if (updateCountdown()) {
@@ -249,3 +291,4 @@ if (!updateCountdown()) {
     }
   }, 1000);
 }
+

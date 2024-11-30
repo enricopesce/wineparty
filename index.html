@@ -1,431 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
- <title>Mappa Vini Italiani</title>
- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
- <style>
-   * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-   }
-
-   body {
-     width: 100%;
-     height: 100vh;
-     overflow: hidden;
-     position: relative;
-   }
-
-   #map {
-     width: 100%;
-     height: 100vh;
-     display: none;
-     z-index: 1;
-   }
-
-   #countdown {
-     position: fixed;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     font-size: calc(2rem + 2vw);
-     color: #333;
-     background-color: rgba(255, 255, 255, 0.9);
-     padding: 20px;
-     border-radius: 10px;
-     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-     z-index: 2;
-     text-align: center;
-     font-family: Arial, sans-serif;
-   }
-
-   .leaflet-popup-content {
-     text-align: center;
-     font-family: Arial, sans-serif;
-     min-width: 250px;
-   }
-
-   .winery-name {
-     font-size: 1.2em;
-     font-weight: bold;
-     margin-bottom: 8px;
-     color: #722F37;
-   }
-
-   .wine-info {
-     font-size: 0.95em;
-     line-height: 1.4;
-     margin-bottom: 5px;
-   }
-
-   .location-info {
-     font-size: 0.9em;
-     color: #666;
-     font-style: italic;
-     margin-bottom: 10px;
-   }
-
-   .wine-image {
-     width: 100%;
-     max-width: 150px;
-     height: auto;
-     margin: 10px auto;
-     border-radius: 5px;
-     display: block;
-   }
-
-   .description {
-     font-size: 0.9em;
-     line-height: 1.5;
-     text-align: left;
-     padding: 10px;
-     background: #f9f9f9;
-     border-radius: 5px;
-     margin-top: 10px;
-   }
-
-   .filter-button {
-     position: fixed;
-     bottom: 20px;
-     right: 20px;
-     width: 56px;
-     height: 56px;
-     border-radius: 50%;
-     background: #722F37;
-     border: none;
-     color: white;
-     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-     z-index: 1000;
-     cursor: pointer;
-   }
-
-   .filter-menu {
-     position: fixed;
-     bottom: 85px;
-     right: 20px;
-     background: white;
-     border-radius: 8px;
-     padding: 16px;
-     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-     display: none;
-     z-index: 1000;
-     width: 200px;
-   }
-
-   .filter-group {
-     margin-bottom: 12px;
-   }
-
-   .filter-title {
-     font-weight: bold;
-     margin-bottom: 8px;
-     color: #722F37;
-   }
-
-   .filter-option {
-     display: block;
-     padding: 4px 0;
-   }
-
-   .filter-option input {
-     margin-right: 8px;
-   }
-
-   .wine-chart {
-    width: 200px;
-    height: 200px;
-    margin: 10px auto;
-  }
-
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mappa Vini Italiani</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
- <div id="countdown">00:00:00</div>
- <div id="map"></div>
+  <div id="countdown">
+    <div>00:00:00</div>
+    <span>In attesa dell'apertura</span>
+  </div>
+  <div id="map"></div>
 
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
- <script>
-   const unlockDate = new Date('2024-11-01T00:00:00');
-   
-   const wineries = [
-     {
-       name: "Franz Haas",
-       wine: "Vigneti delle Dolomiti IGT Manna",
-       location: "Alto Adige",
-       city: "Montagna, BZ",
-       coordinates: [46.4102, 11.3548],
-       description: "Il Vigneti delle Dolomiti Bianco Manna di Franz Haas nasce nei vigneti situati nei comuni di Montagna, Egna ed Aldino. È prodotto con uve Riesling, Chardonnay, Traminer Aromatico e Sauvignon Blanc. Le uve vengono raccolte e lavorate separatamente, lo Chardonnay e il Sauvignon fermentano in barrique, mentre il Riesling e il Traminer fermentano in vasche di acciaio inox. Successivamente i mosti vengono assemblati per l'armonizzazione delle diverse componenti e maturano sui lieviti per circa 10 mesi, prima di essere imbottigliato. È caratterizzato da un colore giallo oro. Al naso si apre con un bouquet complesso ed importante, con sentori di sambuco e pistacchi, arricchiti da piacevoli note di petali di rose. Al palato risulta piacevolmente morbido e con una struttura elegante. Perfetto per accompagnare sushi e piatti a base di pesce, è ideale in abbinamento a crostacei e frutti di mare.",
-       image: "imgs/Franz Haas.jpg",
-       type: "bianco",
-       characteristics: ["floreale", "strutturato"]
-     },
-     {
-       name: "Villa Bucci",
-       wine: "Verdicchio dei Castelli di Jesi",
-       location: "Marche",
-       city: "Ostra Vetere, AN",
-       coordinates: [43.4724, 13.2463],
-       description: "Il Verdicchio dei Castelli di Jesi Classico Superiore DOC Bucci Villa Bucci è sicuramente uno dei migliori della denominazione. Questo bianco nasce da uve da coltura biologica, e si ottiene con la spremitura soffice delle uve e solo il mosto fiore, quello più profumato e ricco diventa Verdicchio. Nel calice si presenta con un bel giallo paglierino intenso, e delizia il naso con un profumo delicato ma persistente, piacevolmente fruttato, accompagnato da un lieve sentore di mela golden e mandorla. Secco ed equilibrato, ha buon corpo ed un'eleganza sofisticata. Un bianco imperdibile con tutti i piatti di mare.",
-       image: "imgs/Villa Bucci.jpg", 
-       type: "bianco",
-       characteristics: ["fruttato", "strutturato"]
-     },
-     {
-       name: "Masciarelli",
-       wine: "Trebbiano d'Abruzzo",
-       location: "Abruzzo", 
-       city: "San Martino sulla Marrucina, CH",
-       coordinates: [42.3500, 14.1500],
-       description: "Il Castello di Semivicoli Trebbiano d'Abruzzo Superiore di Masciarelli nasce in vigneti situati in località di Cascanditella, in provincia di Chieti. È prodotto interamente con uve Trebbiano, raccolte e selezionate a mano nella prima metà di ottobre. La fermentazione avviene in vasche di acciaio inox a bassa temperatura controllata. Successivamente il vino affina sempre in acciaio e poi in bottiglia in modo da stabilizzare le sue caratteristiche organolettiche. Il Castello di Semivicoli Trebbiano d'Abruzzo Superiore di Masciarelli presenta un colore giallo paglierino, con riflessi verdolini. Al naso si apre con eleganti sentori di mela, albicocca e iris. In bocca risulta equilibrato e vibrante, con un finale gradevolmente persistente. Perfetto per accompagnare primi piatti, è ideale in abbinamento con carni bianche e pesce.",
-       image: "imgs/Masciarelli.jpg",
-       type: "bianco",
-       characteristics: ["fruttato"]
-     },
-     {
-       name: "Cantina di Santadi",
-       wine: "Vermentino di Sardegna",
-       location: "Sardegna",
-       city: "Santadi, SU",
-       coordinates: [39.0833, 8.7167],
-       description: "Il Vermentino di Sardegna Cala Silente della Cantina di Santadi nasce in vigneti situati nel cuore del Sulcis. È prodotto esclusivamente con uve Vermentino, raccolte a mano tra i primi di settembre e i primi di ottobre. Il mosto fermenta in vasche di acciaio inox alla temperatura controllata di 16-18°C, quindi il vino matura in vasche di cemento a contatto con i propri lieviti, per conferirgli maggiore rotondità ed equilibrio. Il Cala Silente è caratterizzato da un colore giallo paglierino, con riflessi verde-oro. Al naso si apre con profumi intensi e complessi, tra cui spiccano piacevoli sentori di mele, pesche e agrumi. Al palato risulta fine ed equilibrato, con una piacevole persistenza naturale. Perfetto per accompagnare piatti a base di pesce, è ideale in abbinamento a carni bianche.",
-       image: "imgs/Cantina di Santadi.jpg",
-       type: "bianco",
-       characteristics: ["fruttato", "agrumato"]
-     },
-     {
-       name: "Pieropan",
-       wine: "Soave Classico",
-       location: "Veneto",
-       city: "Soave, VR",
-       coordinates: [45.4219, 11.2266],
-       description: "Il Soave Classico Calvarino di Pieropan nasce nell'omonimo vigneto, situato nel cuore della zona classica del Soave, in Veneto. È prodotto in prevalenza con uve Garganega e con uve Trebbiano di Soave, raccolte rigorosamente a mano con doppio passaggio per selezionare solo l'uva più matura. Una volta effettuate la diraspatura e la pressatura, il mosto fiore fermenta alla temperatura controllata di 16-18°C in vasche di cemento vetrificato. In seguito, il vino matura nelle stesse vasche per circa un anno, restando a contatto con la feccia fine per arricchirsi in struttura e complessità. Dopo l'imbottigliamento riposa in bottiglia per alcuni mesi prima di essere commercializzato. Il Calvarino è un vino dal colore giallo paglierino, arricchito da riflessi oro-verde brillante. Al naso si apre con sentori freschi e floreali e un bouquet che spazia da note di sambuco ad aromi di mela Limoncella e pera, con un sottofondo di nocciola e mandorla. In bocca risulta fresco, elegante e sapido, molto ben bilanciato, con un ritorno di sentori di mela Limoncella. Il finale è piacevolmente lungo e persistente. Perfetto come aperitivo, è ideale in abbinamento a sformati di verdure, pesci delicati, crostacei e soufflé di formaggi. Perfetto anche con un piatto tipico della tradizione veronese, il risotto agli asparagi.",
-       image: "imgs/Pieropan.jpg",
-       type: "bianco",
-       characteristics: ["fruttato", "floreale"]
-     },
-     {
-       name: "Vigneti Massa", 
-       wine: "Derthona",
-       location: "Piemonte",
-       city: "Monleale, AL",
-       coordinates: [44.8833, 8.9667],
-       description: "Il Derthona di Vigneti Massa nasce in vigneti situati sulle colline tortonesi in provincia di Alessandria, a sud del Piemonte. È prodotto con uve Timorasso in purezza, raccolte e selezionate interamente a mano. La fermentazione avviene in vasche di acciaio inox, con macerazione a contatto con le bucce per 48-60 ore, ad una temperatura controllata di 18-22°C. Successivamente il vino matura in vasche di acciaio e di cemento, con affinamento in bottiglia di almeno 6 mesi. Presenta un colore giallo paglierino di media intensità. Al naso si apre con sentori di fiori di acacia e di tiglio, accompagnati da gradevoli sensazioni agrumate. Al palato risulta corposo e minerale, di piacevole persistenza e freschezza. Perfetto per accompagnare antipasti e secondi piatti a base di pesce, è ideale in abbinamento con formaggi erborinati o stagionati.",
-       image: "imgs/Vigneti Massa.jpg",
-       type: "bianco", 
-       characteristics: ["minerale", "floreale"]
-     },
-     {
-       name: "Arianna Occhipinti",
-       wine: "Terre Siciliane",
-       location: "Sicilia",
-       city: "Vittoria, RG",
-       coordinates: [36.9253, 14.7519],
-       description: "SP68 Bianco di Arianna Occhipinti è un vino bianco fresco e aromatico prodotto in Sicilia, composto da uve Albanello e Moscato d'Alessandria. I vigneti si estendono su 4,5 ettari di suolo sabbioso di natura calcarea e sono piantati con sistema Guyot e Cordone speronato, con una densità di 6.000 ceppi per ettaro e un'età media di 23 anni. La vinificazione prevede pigiadiraspatura, macerazione sulle bucce e fermentazione spontanea in tini di cemento da 85 hl per 12 giorni con rimontaggi e follature giornaliere. Dopo la svinatura, il vino viene affinato negli stessi contenitori per 7 mesi, mantenendo così la sua freschezza e complessità. SP68 Bianco si presenta fragrante e minerale, con una leggera aromaticità che ne esalta la finezza. Al palato è leggiadro e agile, mantenendo ricchezza e carattere. È un vino rinfrescante e dissetante, perfetto per essere gustato in una calda giornata estiva. Questo vino si abbina perfettamente a piatti di pesce leggero e insalate.",
-       image: "imgs/Arianna Occhipinti.jpg",
-       type: "bianco",
-       characteristics: ["minerale", "floreale"]
-     },
-     {
-       name: "Oltrenero",
-       wine: "Oltrepò Pavese",
-       location: "Lombardia", 
-       city: "Casteggio, PV",
-       coordinates: [44.9833, 9.1500],
-       description: "L'Oltrepò Pavese Metodo Classico Pinot Nero Rosé Brut Oltrenero Cruasé proviene da un singolo vigneto ubicato nel comune di Zenevredo, in provincia di Pavia. È prodotto esclusivamente con uve Pinot Nero, raccolte e selezionate interamente a mano. Dopo una breve macerazione, la fermentazione si protrae per 12 giorni a 18°C, cui segue maturazione sulle fecce fini. La presa di spuma avviene per rifermentazione in bottiglia, secondo Metodo Classico, con affinamento di 36 mesi sui propri lieviti. L'Oltrenero Cruasé della Tenuta Il Bosco è caratterizzato da un colore rosa vivace, da una spuma morbida e persistente, e da un perlage sottile. Al naso si contraddistingue per un bouquet fragrante, con note di mandarino, arricchite da sentori di lampone, ribes, fragole selvatiche e ricordi di crosta di pane nel finale. Il sapore è fresco e deciso, di ottima sapidità. Ottimo aperitivo, si accompagna egregiamente con salumi pregiati, risotti e zuppe di verdura, crostacei e crudité di pesce.",
-       image: "imgs/Oltrenero.jpg",
-       type: "spumante",
-       characteristics: ["fruttato", "floreale"] 
-     },
-     {
-       name: "Puiatti",
-       wine: "Vino Spumante Ribolla Gialla",
-       location: "Friuli Venezia Giulia",
-       city: "Romans d'Isonzo, GO",
-       coordinates: [45.9500, 13.4167],
-       description: "Ribolla Gialla Metodo Classico di Cantina Puiatti nasce nei vigneti situati a Romans d'Isonzo, località Zuccole, nella zona dell'Isonzo in Friuli. È prodotto esclusivamente con uve Ribolla Gialla, raccolte e selezionate interamente a mano nella terza settimana di settembre. Dopo i processi classici di vinificazione in bianco, la presa di spuma avviene per rifermentazione in bottiglia, secondo Metodo Classico, con affinamento sui propri lieviti da 20 a 24 mesi. È caratterizzata da perlage persistente e naso intrigante, con note di ginestra, pera e mela Golden, erbe aromatiche. Bocca mordace e croccante, fresca, dal finale lungo. Questo Metodo Classico è un vino ottimo come aperitivo, ma anche durante un pasto a base di pesce.",
-       image: "imgs/Puiatti.jpg",
-       type: "spumante",
-       characteristics: ["floreale", "fruttato"]
-     },
-     {
-       name: "Isle of Harris",
-       wine: "Gin",
-       location: "Isole Ebridi, Scozia", 
-       city: "Tarbert, Isle of Harris",
-       coordinates: [57.9914, -6.8583],
-       description: "Il Gin della distilleria Harris è un gin super premium scozzese. Nasce nell'omonima isola, considerata i Caraibi della Scozia. La distilleria è stata fondata nel 2015. Questo gin è distillato in alambicco di rame con 9 diverse botaniche che richiamano il suo legame con il mare. L'ingrediente più identificativo è lo Sugar Kelp, un'alga che cresce in profondità e che viene raccolta a mano dai sub. Nel bicchiere si presenta di un colore trasparente, mentre al naso profuma di agrumi, in particolare di pompelmo, con note pepate e minerali. Il sorso è molto secco, dal finale lungo. Perfetto da gustare sia liscio che nella preparazione di raffinati cocktail.",
-       image: "imgs/Isle of Harris.jpg",
-       type: "spirits",
-       characteristics: ["agrumato"]
-     }
-   ];
+  <div class="details-panel" id="detailsPanel">
+    <div class="details-header">
+      <h2>Dettagli del Vino</h2>
+      <button class="close-button" onclick="closeDetails()">×</button>
+    </div>
+    <div class="details-content" id="detailsContent">
+      <!-- Content will be dynamically inserted here -->
+    </div>
+  </div>
 
-   let map;
-   const countdownElement = document.getElementById('countdown');
-   const mapElement = document.getElementById('map');
-   
-   function updateCountdown() {
-     const now = new Date();
-     const diff = unlockDate - now;
+  <button class="filter-button" onclick="toggleFilters()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>
+    </svg>
+  </button>
 
-     if (diff <= 0) {
-       countdownElement.style.display = 'none';
-       mapElement.style.display = 'block';
-       initMap();
-       return true;
-     }
+  <div class="filter-menu" id="filterMenu">
+    <div class="filter-group">
+      <div class="filter-title">Tipologia</div>
+      <label class="filter-option">
+        <input type="checkbox" name="type" value="bianco" onchange="updateMarkers()"> Bianchi fermi
+      </label>
+      <label class="filter-option">
+        <input type="checkbox" name="type" value="spumante" onchange="updateMarkers()"> Spumanti
+      </label>
+      <label class="filter-option">
+        <input type="checkbox" name="type" value="spirits" onchange="updateMarkers()"> Spiriti
+      </label>
+    </div>
+    <div class="filter-group">
+      <div class="filter-title">Caratteristiche</div>
+      <label class="filter-option">
+        <input type="checkbox" name="characteristic" value="minerale" onchange="updateMarkers()"> Minerale
+      </label>
+      <label class="filter-option">
+        <input type="checkbox" name="characteristic" value="fruttato" onchange="updateMarkers()"> Fruttato
+      </label>
+      <label class="filter-option">
+        <input type="checkbox" name="characteristic" value="floreale" onchange="updateMarkers()"> Floreale
+      </label>
+      <label class="filter-option">
+        <input type="checkbox" name="characteristic" value="agrumato" onchange="updateMarkers()"> Agrumato
+      </label>
+    </div>
+  </div>
 
-     const hours = Math.floor(diff / (1000 * 60 * 60));
-     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-     countdownElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-     return false;
-   }
-
-   function initMap() {
-     map = L.map('map', {
-       zoomControl: false,
-       dragging: !L.Browser.mobile
-     }).setView([42.8333, 12.8333], 6);
-
-     L.control.zoom({
-       position: 'topright'
-     }).addTo(map);
-
-     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-       maxZoom: 19,
-       attribution: '© OpenStreetMap contributors'
-     }).addTo(map);
-
-     updateMarkers();
-   }
-
-   function updateMarkers() {
-     // Clear existing markers
-     map.eachLayer((layer) => {
-       if (layer instanceof L.Marker) {
-         map.removeLayer(layer);
-       }
-     });
-
-     const selectedTypes = [...document.querySelectorAll('input[name="type"]:checked')]
-       .map(cb => cb.value);
-     const selectedCharacteristics = [...document.querySelectorAll('input[name="characteristic"]:checked')]
-       .map(cb => cb.value);
-
-     wineries.forEach(winery => {
-       const typeMatch = selectedTypes.length === 0 || selectedTypes.includes(winery.type);
-       const characteristicMatch = selectedCharacteristics.length === 0 || 
-         selectedCharacteristics.some(c => winery.characteristics.includes(c));
-
-       if (typeMatch && characteristicMatch) {
-         const marker = L.marker(winery.coordinates).addTo(map);
-         marker.bindPopup(`
-         <div class="winery-name">${winery.name}</div>
-         <div class="wine-info">${winery.wine}</div>
-         <div class="location-info">${winery.location} - ${winery.city}</div>
-         <img src="${winery.image}" alt="${winery.wine}" class="wine-image">
-         <canvas class="wine-chart" id="chart-${winery.name.replace(/\s+/g, '-')}"></canvas>
-         <div class="description">${winery.description}</div>
-       `).on('popupopen', () => {
-         const ctx = document.getElementById(`chart-${winery.name.replace(/\s+/g, '-')}`);
-         new Chart(ctx, {
-           type: 'radar',
-           data: {
-             labels: ['Struttura', 'Mineralità', 'Freschezza', 'Fruttato', 'Floreale', 'Agrumato'],
-             datasets: [{
-               label: 'Profilo',
-               data: [
-                 winery.characteristics.includes('strutturato') ? 4 : 2,
-                 winery.characteristics.includes('minerale') ? 4 : 2,
-                 winery.characteristics.includes('fresco') ? 4 : 2,
-                 winery.characteristics.includes('fruttato') ? 4 : 2, 
-                 winery.characteristics.includes('floreale') ? 4 : 2,
-                 winery.characteristics.includes('agrumato') ? 4 : 2
-               ],
-               fill: true,
-               backgroundColor: 'rgba(114, 47, 55, 0.2)',
-               borderColor: '#722F37',
-               pointBackgroundColor: '#722F37',
-             }]
-           },
-           options: {
-             scales: {
-               r: {
-                 angleLines: {
-                   display: true
-                 },
-                 suggestedMin: 0,
-                 suggestedMax: 5
-               }
-             }
-           }
-         });
-       });
-       }
-     });
-   }
-
-   function toggleFilters() {
-     const menu = document.getElementById('filterMenu');
-     menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-   }
-
-   document.addEventListener('click', function(event) {
-     const menu = document.getElementById('filterMenu');
-     const button = document.querySelector('.filter-button');
-     if (!menu.contains(event.target) && !button.contains(event.target)) {
-       menu.style.display = 'none';
-     }
-   });
-
-   if (!updateCountdown()) {
-     const interval = setInterval(() => {
-       if (updateCountdown()) {
-         clearInterval(interval);
-       }
-     }, 1000);
-   }
- </script>
-
- <button class="filter-button" onclick="toggleFilters()">
-   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-     <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>
-   </svg>
- </button>
-
- <div class="filter-menu" id="filterMenu">
-   <div class="filter-group">
-     <div class="filter-title">Tipologia</div>
-     <label class="filter-option">
-       <input type="checkbox" name="type" value="bianco" onchange="updateMarkers()"> Bianchi fermi
-     </label>
-     <label class="filter-option">
-       <input type="checkbox" name="type" value="spumante" onchange="updateMarkers()"> Spumanti
-     </label>
-     <label class="filter-option">
-       <input type="checkbox" name="type" value="spirits" onchange="updateMarkers()"> Spiriti
-     </label>
-   </div>
-   <div class="filter-group">
-     <div class="filter-title">Caratteristiche</div>
-     <label class="filter-option">
-       <input type="checkbox" name="characteristic" value="minerale" onchange="updateMarkers()"> Minerale
-     </label>
-     <label class="filter-option">
-       <input type="checkbox" name="characteristic" value="fruttato" onchange="updateMarkers()"> Fruttato
-     </label>
-     <label class="filter-option">
-       <input type="checkbox" name="characteristic" value="floreale" onchange="updateMarkers()"> Floreale
-     </label>
-     <label class="filter-option">
-       <input type="checkbox" name="characteristic" value="agrumato" onchange="updateMarkers()"> Agrumato
-     </label>
-   </div>
- </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="data.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>

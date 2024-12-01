@@ -15,8 +15,47 @@
     background: rgba(114, 47, 55, 0.1);
 }
 
-.characteristics-section {
-    margin: 30px 0;
+.characteristic-tag {
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.characteristic-tag .percentage {
+    font-size: 0.8em;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 12px;
+}
+
+.characteristics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+/* Aggiungiamo classi per le fasce di predominanza */
+.characteristic-tag[data-predominance="high"] {
+    font-weight: 600;
+    padding: 10px 18px;
+}
+
+.characteristic-tag[data-predominance="medium"] {
+    opacity: 0.9;
+}
+
+.characteristic-tag[data-predominance="low"] {
+    opacity: 0.8;
+    font-size: 0.85em;
 }
 
 .section-title {

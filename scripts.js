@@ -1,11 +1,37 @@
 let map;
-const countdownElement = document.getElementById('countdown');
-const mapElement = document.getElementById('map');
+const countdownElement = document.getElementById("countdown");
+const mapElement = document.getElementById("map");
 
 const markerColors = {
-  bianco: '#FFD700',     // Oro per i vini bianchi
-  spumante: '#87CEEB',   // Azzurro per gli spumanti
-  spirits: '#9370DB'     // Viola per gli spirits
+  bianco: "#FFD700", // Oro per i vini bianchi
+  spumante: "#87CEEB", // Azzurro per gli spumanti
+  spirits: "#9370DB", // Viola per gli spirits
+};
+
+const characteristicColors = {
+  // Aromatici/Floreali
+  floreale: "#9B6B9E", // Viola chiaro
+  aromatico: "#9B6B9E",
+
+  // Fruttati/Agrumati
+  fruttato: "#E9967A", // Pesca
+  agrumato: "#FFB347", // Arancione
+
+  // Struttura/Corpo
+  strutturato: "#8B4513", // Marrone
+  cremoso: "#DEB887", // Beige
+
+  // Minerali/Freschi
+  minerale: "#87CEEB", // Azzurro
+  fresco: "#20B2AA", // Turchese
+
+  // Speziati/Complessi
+  speziato: "#CD853F", // Terra di Siena
+  marino: "#4682B4", // Blu acciaio
+
+  // Altro
+  mandorlato: "#DEB887", // Beige
+  "crosta di pane": "#D2691E", // Marrone chiaro
 };
 
 const getTasteDescription = {
@@ -14,40 +40,53 @@ const getTasteDescription = {
     label: "Dolcezza",
     left: "Secco",
     right: "Dolce",
-    value: value * 20
+    value: value * 20,
   }),
   acidità: (value) => ({
     label: "Acidità",
     left: "Morbido",
     right: "Fresco",
-    value: value * 20
+    value: value * 20,
   }),
   corpo: (value) => ({
     label: "Corpo",
     left: "Leggero",
     right: "Strutturato",
-    value: value * 20
+    value: value * 20,
   }),
   persistenza: (value) => ({
     label: "Persistenza",
     left: "Breve",
     right: "Lunga",
-    value: value * 20
+    value: value * 20,
   }),
   // Spirits characteristics
   sapidità: (value) => ({
     label: "Sapidità",
     left: "Delicato",
     right: "Intenso",
-    value: value * 20
+    value: value * 20,
   }),
   intensità: (value) => ({
     label: "Intensità",
     left: "Leggera",
     right: "Forte",
-    value: value * 20
-  })
+    value: value * 20,
+  }),
 };
+
+function getCharacteristicColor(characteristic) {
+  return characteristicColors[characteristic] || "#722F37"; // Colore default se non mappato
+}
+
+function adjustColor(color, amount) {
+  const hex = color.replace("#", "");
+  const num = parseInt(hex, 16);
+  const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+  const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amount));
+  const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amount));
+  return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
+}
 
 function formatTasteProfile(tasteProfile) {
   return Object.entries(tasteProfile)
@@ -70,7 +109,8 @@ function formatTasteProfile(tasteProfile) {
           </div>
         </div>
       `;
-    }).join('');
+    })
+    .join("");
 }
 
 function updateMarkers() {
@@ -88,28 +128,38 @@ function updateMarkers() {
     }
   });
 
-  wineries.forEach(winery => {
-    console.log("Creating marker for:", winery.name, "at coordinates:", winery.coordinates);
-    
+  wineries.forEach((winery) => {
+    console.log(
+      "Creating marker for:",
+      winery.name,
+      "at coordinates:",
+      winery.coordinates
+    );
+
     const marker = L.marker(winery.coordinates, {
-      icon: createCustomIcon(winery.type)
+      icon: createCustomIcon(winery.type),
     });
-    
+
     marker.bindTooltip(winery.name, {
       permanent: false,
-      direction: 'top'
+      direction: "top",
     });
-    
-    marker.on('click', () => showDetails(winery));
+
+    marker.on("click", () => showDetails(winery));
     marker.addTo(map);
   });
 }
 
 function createCustomIcon(type) {
-  console.log("Creating icon for type:", type, "with color:", markerColors[type]);
-  
+  console.log(
+    "Creating icon for type:",
+    type,
+    "with color:",
+    markerColors[type]
+  );
+
   return L.divIcon({
-    className: 'custom-marker',
+    className: "custom-marker",
     html: `<div style="
       position: absolute;
       background-color: ${markerColors[type]};
@@ -124,27 +174,29 @@ function createCustomIcon(type) {
       "></div>`,
     iconSize: [25, 25],
     iconAnchor: [12, 12],
-    popupAnchor: [0, -12]
+    popupAnchor: [0, -12],
   });
 }
 
 function initMap() {
   console.log("initMap called");
-  map = L.map('map', {
+  map = L.map("map", {
     zoomControl: false,
-    dragging: true,      // Enable dragging on all devices
-    tap: true,           // Enable tap for touch devices
-    touchZoom: true,     // Enable touch zoom
-    scrollWheelZoom: true // Enable scroll wheel zoom
+    dragging: true, // Enable dragging on all devices
+    tap: true, // Enable tap for touch devices
+    touchZoom: true, // Enable touch zoom
+    scrollWheelZoom: true, // Enable scroll wheel zoom
   }).setView([42.8333, 12.8333], 6);
 
-  L.control.zoom({
-    position: 'topright'
-  }).addTo(map);
+  L.control
+    .zoom({
+      position: "topright",
+    })
+    .addTo(map);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
-    attribution: '© OpenStreetMap contributors'
+    attribution: "© OpenStreetMap contributors",
   }).addTo(map);
 
   console.log("Calling updateMarkers");
@@ -156,8 +208,8 @@ function updateCountdown() {
   const diff = unlockDate - now;
 
   if (diff <= 0) {
-    countdownElement.style.display = 'none';
-    mapElement.style.display = 'block';
+    countdownElement.style.display = "none";
+    mapElement.style.display = "block";
     initMap();
     return true;
   }
@@ -165,30 +217,111 @@ function updateCountdown() {
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  
-  const timerDiv = countdownElement.querySelector('div');
-  timerDiv.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+  const timerDiv = countdownElement.querySelector("div");
+  timerDiv.textContent = `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   return false;
 }
 
 function getAllCharacteristics() {
   const characteristicsSet = new Set();
-  
-  wineries.forEach(winery => {
-    winery.characteristics.primary.forEach(char => characteristicsSet.add(char));
-    winery.characteristics.secondary.forEach(char => characteristicsSet.add(char));
+
+  wineries.forEach((winery) => {
+    winery.characteristics.primary.forEach((char) =>
+      characteristicsSet.add(char)
+    );
+    winery.characteristics.secondary.forEach((char) =>
+      characteristicsSet.add(char)
+    );
   });
-  
+
   return Array.from(characteristicsSet).sort();
 }
 
+function calculateCharacteristicsPredominance(winery) {
+  // Creiamo un oggetto per tenere traccia dei punteggi totali
+  let scores = {};
+  let totalScore = 0;
+
+  // Assegniamo pesi alle caratteristiche primarie e secondarie
+  winery.characteristics.primary.forEach((char) => {
+    scores[char] = scores[char] || 0;
+    scores[char] += 3; // Peso maggiore per caratteristiche primarie
+    totalScore += 3;
+  });
+
+  winery.characteristics.secondary.forEach((char) => {
+    scores[char] = scores[char] || 0;
+    scores[char] += 1; // Peso minore per caratteristiche secondarie
+    totalScore += 1;
+  });
+
+  // Aggiungiamo i valori di intensità quando disponibili
+  Object.entries(winery.characteristics.intensity).forEach(
+    ([char, intensity]) => {
+      if (scores[char]) {
+        scores[char] += intensity; // Aggiungiamo l'intensità al punteggio
+        totalScore += intensity;
+      }
+    }
+  );
+
+  // Calcoliamo le percentuali e ordiniamo per predominanza
+  const percentages = Object.entries(scores)
+    .map(([char, score]) => ({
+      characteristic: char,
+      percentage: Math.round((score / totalScore) * 100),
+    }))
+    .sort((a, b) => b.percentage - a.percentage);
+
+  return percentages;
+}
+
+function formatCharacteristicTags(characteristics, winery) {
+  const predominance = calculateCharacteristicsPredominance(winery);
+
+  return predominance
+    .map(
+      ({ characteristic, percentage }) =>
+        `<span class="characteristic-tag" 
+           style="background: linear-gradient(135deg, 
+                                           ${getCharacteristicColor(
+                                             characteristic
+                                           )}, 
+                                           ${adjustColor(
+                                             getCharacteristicColor(
+                                               characteristic
+                                             ),
+                                             -20
+                                           )})">
+      ${characteristic}
+      <span class="percentage">${percentage}%</span>
+     </span>`
+    )
+    .join("");
+}
 
 function showDetails(winery) {
   const panel = document.getElementById('detailsPanel');
   const content = document.getElementById('detailsContent');
   
-  const allCharacteristics = [...winery.characteristics.primary, ...winery.characteristics.secondary];
-  const characteristicsTags = allCharacteristics.map(c => `<span class="characteristic-tag">${c}</span>`).join('');
+  // Calcoliamo la predominanza
+  const predominance = calculateCharacteristicsPredominance(winery);
+  const characteristicsTags = predominance
+    .map(({characteristic, percentage}) => {
+      const color = getCharacteristicColor(characteristic);
+      const darkColor = adjustColor(color, -20);
+      return `
+        <span class="characteristic-tag" 
+              style="background: linear-gradient(135deg, ${color}, ${darkColor})"
+              data-predominance="${percentage >= 30 ? 'high' : percentage >= 20 ? 'medium' : 'low'}">
+          ${characteristic}
+          <span class="percentage">${percentage}%</span>
+        </span>`;
+    })
+    .join('');
   
   // Handle ingredients display based on type
   const ingredientsTitle = winery.type === 'spirits' ? 'Botaniche' : 'Vitigni';
@@ -217,23 +350,34 @@ function showDetails(winery) {
         </div>
       </div>
     </div>
-
     <div class="taste-profile-section">
-      <h3 class="section-title">Profilo ${winery.type === 'spirits' ? 'Organolettico' : 'Gustativo'}</h3>
+      <h3 class="section-title">Profilo ${
+        winery.type === "spirits" ? "Organolettico" : "Gustativo"
+      }</h3>
       <div class="taste-profile-grid">
         ${formatTasteProfile(winery.taste_profile)}
       </div>
     </div>
 
     <div class="additional-info">
-      <p><strong>${ingredientsTitle}:</strong> ${ingredients.join(', ')}</p>
-      ${winery.aging ? `<p><strong>${winery.type === 'spirits' ? 'Distillazione' : 'Affinamento'}:</strong> ${winery.aging}</p>` : ''}
-      ${winery.awards && winery.awards.length > 0 ? `
+      <p><strong>${ingredientsTitle}:</strong> ${ingredients.join(", ")}</p>
+      ${
+        winery.aging
+          ? `<p><strong>${
+              winery.type === "spirits" ? "Distillazione" : "Affinamento"
+            }:</strong> ${winery.aging}</p>`
+          : ""
+      }
+      ${
+        winery.awards && winery.awards.length > 0
+          ? `
         <p><strong>Riconoscimenti:</strong></p>
         <ul class="awards-list">
-          ${winery.awards.map(award => `<li>${award}</li>`).join('')}
+          ${winery.awards.map((award) => `<li>${award}</li>`).join("")}
         </ul>
-      ` : ''}
+      `
+          : ""
+      }
     </div>
 
     <div class="details-description">
@@ -241,14 +385,14 @@ function showDetails(winery) {
     </div>
   `;
 
-  panel.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+  panel.style.display = "block";
+  document.body.style.overflow = "hidden";
 }
 
 function closeDetails() {
-  const panel = document.getElementById('detailsPanel');
-  panel.style.display = 'none';
-  document.body.style.overflow = 'auto';
+  const panel = document.getElementById("detailsPanel");
+  panel.style.display = "none";
+  document.body.style.overflow = "auto";
 }
 
 if (!updateCountdown()) {

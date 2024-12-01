@@ -335,11 +335,22 @@ function showDetails(winery) {
       <div class="wine-info">
         <h1 class="details-title">${winery.name}</h1>
         <h2 class="details-subtitle">${winery.wine}</h2>
+        <h2 class="details-subtitle"></h2>
         <div class="wine-location">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
           </svg>
           ${winery.location} - ${winery.city}
+        </div>
+        
+        <!-- Aggiunto il link al sito web -->
+        <div class="wine-website">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          <a href="https://${winery.website}" target="_blank" rel="noopener noreferrer">${winery.website}</a>
         </div>
         
         <div class="characteristics-section">
@@ -388,6 +399,7 @@ function showDetails(winery) {
   panel.style.display = "block";
   document.body.style.overflow = "hidden";
 }
+
 
 function closeDetails() {
   const panel = document.getElementById("detailsPanel");

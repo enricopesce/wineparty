@@ -1,0 +1,74 @@
+.taste-profile-section {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 30px 0;
+  }
+  
+  .taste-profile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 20px;
+  }
+  
+  .taste-characteristic {
+    width: 100%;
+  }
+  
+  .taste-header {
+    margin-bottom: 8px;
+  }
+  
+  .taste-label {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1em;
+  }
+  
+  .taste-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .taste-label-left,
+  .taste-label-right {
+    font-size: 0.9em;
+    color: #666;
+    min-width: 70px;
+  }
+  
+  .taste-label-left {
+    text-align: right;
+  }
+  
+  .taste-bar-wrapper {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #E0E0E0;
+    border-radius: 4px;
+    position: relative;
+  }
+  
+  .taste-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #722F37 0%, #8B3741 100%);
+    border-radius: 4px;
+    position: relative;
+    transition: width 0.3s ease;
+  }
+  
+  .taste-bar-indicator {
+    width: 16px;
+    height: 16px;
+    background-color: #722F37;
+    border: 3px solid white;
+    border-radius: 50%;
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }

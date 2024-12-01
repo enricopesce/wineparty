@@ -1,5 +1,4 @@
 let map;
-let currentChart = null;
 const countdownElement = document.getElementById('countdown');
 const mapElement = document.getElementById('map');
 
@@ -9,41 +8,70 @@ const markerColors = {
   spirits: '#9370DB'     // Viola per gli spirits
 };
 
-// Opzioni comuni per entrambi i grafici
-const commonChartOptions = {
-  scales: {
-      r: {
-          angleLines: {
-              display: true,
-              color: 'rgba(0, 0, 0, 0.3)' // Linee più scure
-          },
-          suggestedMin: 0,
-          suggestedMax: 5,
-          ticks: {
-              stepSize: 1,
-              font: {
-                  size: 14 // Testo più grande
-              },
-              color: '#444' // Colore più scuro
-          },
-          pointLabels: {
-              font: {
-                  size: 16, // Etichette più grandi
-                  weight: '500' // Testo più in grassetto
-              },
-              color: '#333' // Colore più scuro
-          }
-      }
-  },
-  plugins: {
-      legend: {
-          display: false
-      }
-  },
-  layout: {
-      padding: 20 // Più spazio intorno al grafico
-  }
+const getTasteDescription = {
+  // Wine characteristics
+  dolcezza: (value) => ({
+    label: "Dolcezza",
+    left: "Secco",
+    right: "Dolce",
+    value: value * 20
+  }),
+  acidità: (value) => ({
+    label: "Acidità",
+    left: "Morbido",
+    right: "Fresco",
+    value: value * 20
+  }),
+  corpo: (value) => ({
+    label: "Corpo",
+    left: "Leggero",
+    right: "Strutturato",
+    value: value * 20
+  }),
+  persistenza: (value) => ({
+    label: "Persistenza",
+    left: "Breve",
+    right: "Lunga",
+    value: value * 20
+  }),
+  // Spirits characteristics
+  sapidità: (value) => ({
+    label: "Sapidità",
+    left: "Delicato",
+    right: "Intenso",
+    value: value * 20
+  }),
+  intensità: (value) => ({
+    label: "Intensità",
+    left: "Leggera",
+    right: "Forte",
+    value: value * 20
+  })
 };
+
+function formatTasteProfile(tasteProfile) {
+  return Object.entries(tasteProfile)
+    .filter(([characteristic]) => characteristic in getTasteDescription) // Only process known characteristics
+    .map(([characteristic, value]) => {
+      const description = getTasteDescription[characteristic](value);
+      return `
+        <div class="taste-characteristic">
+          <div class="taste-header">
+            <span class="taste-label">${description.label}</span>
+          </div>
+          <div class="taste-bar-container">
+            <span class="taste-label-left">${description.left}</span>
+            <div class="taste-bar-wrapper">
+              <div class="taste-bar" style="width: ${description.value}%">
+                <div class="taste-bar-indicator"></div>
+              </div>
+            </div>
+            <span class="taste-label-right">${description.right}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+}
 
 function updateMarkers() {
   console.log("updateMarkers called");
@@ -52,7 +80,7 @@ function updateMarkers() {
     return;
   }
 
-  console.log("Current wineries:", wineries);  // Verifica che wineries esista e contenga dati
+  console.log("Current wineries:", wineries);
 
   map.eachLayer((layer) => {
     if (layer instanceof L.Marker) {
@@ -104,7 +132,10 @@ function initMap() {
   console.log("initMap called");
   map = L.map('map', {
     zoomControl: false,
-    dragging: !L.Browser.mobile
+    dragging: true,      // Enable dragging on all devices
+    tap: true,           // Enable tap for touch devices
+    touchZoom: true,     // Enable touch zoom
+    scrollWheelZoom: true // Enable scroll wheel zoom
   }).setView([42.8333, 12.8333], 6);
 
   L.control.zoom({
@@ -119,7 +150,6 @@ function initMap() {
   console.log("Calling updateMarkers");
   updateMarkers();
 }
-
 
 function updateCountdown() {
   const now = new Date();
@@ -136,25 +166,19 @@ function updateCountdown() {
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
   
-  // Modifica qui: seleziona solo il div interno per il timer
   const timerDiv = countdownElement.querySelector('div');
   timerDiv.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   return false;
 }
 
-
-
 function getAllCharacteristics() {
   const characteristicsSet = new Set();
   
   wineries.forEach(winery => {
-    // Add primary characteristics
     winery.characteristics.primary.forEach(char => characteristicsSet.add(char));
-    // Add secondary characteristics
     winery.characteristics.secondary.forEach(char => characteristicsSet.add(char));
   });
   
-  // Convert Set to sorted array
   return Array.from(characteristicsSet).sort();
 }
 
@@ -165,6 +189,10 @@ function showDetails(winery) {
   
   const allCharacteristics = [...winery.characteristics.primary, ...winery.characteristics.secondary];
   const characteristicsTags = allCharacteristics.map(c => `<span class="characteristic-tag">${c}</span>`).join('');
+  
+  // Handle ingredients display based on type
+  const ingredientsTitle = winery.type === 'spirits' ? 'Botaniche' : 'Vitigni';
+  const ingredients = winery.type === 'spirits' ? winery.botanicals : winery.grapes;
   
   content.innerHTML = `
     <div class="wine-header">
@@ -190,21 +218,17 @@ function showDetails(winery) {
       </div>
     </div>
 
-    <div class="charts-container">
-      <div class="chart-wrapper">
-        <h3>Profilo Aromatico</h3>
-        <canvas id="characteristicsChart"></canvas>
-      </div>
-      <div class="chart-wrapper">
-        <h3>Profilo Gustativo</h3>
-        <canvas id="tasteChart"></canvas>
+    <div class="taste-profile-section">
+      <h3 class="section-title">Profilo ${winery.type === 'spirits' ? 'Organolettico' : 'Gustativo'}</h3>
+      <div class="taste-profile-grid">
+        ${formatTasteProfile(winery.taste_profile)}
       </div>
     </div>
 
     <div class="additional-info">
-      <p><strong>Vitigni:</strong> ${winery.grapes.join(', ')}</p>
-      <p><strong>Affinamento:</strong> ${winery.aging}</p>
-      ${winery.awards.length > 0 ? `
+      <p><strong>${ingredientsTitle}:</strong> ${ingredients.join(', ')}</p>
+      ${winery.aging ? `<p><strong>${winery.type === 'spirits' ? 'Distillazione' : 'Affinamento'}:</strong> ${winery.aging}</p>` : ''}
+      ${winery.awards && winery.awards.length > 0 ? `
         <p><strong>Riconoscimenti:</strong></p>
         <ul class="awards-list">
           ${winery.awards.map(award => `<li>${award}</li>`).join('')}
@@ -217,61 +241,6 @@ function showDetails(winery) {
     </div>
   `;
 
-  // Distruggi i grafici esistenti se presenti
-  if (currentChart) {
-    currentChart.destroy();
-  }
-  
-  // Nel tuo codice dei grafici, aggiungi queste opzioni:
-const ctxChar = document.getElementById('characteristicsChart');
-new Chart(ctxChar, {
-    type: 'radar',
-    data: {
-        labels: ['Fruttato', 'Agrumato', 'Minerale', 'Floreale'],
-        datasets: [{
-            label: 'Intensità',
-            data: [
-                winery.characteristics.intensity.fruttato || 0,
-                winery.characteristics.intensity.agrumato || 0,
-                winery.characteristics.intensity.minerale || 0,
-                winery.characteristics.intensity.floreale || 0
-            ],
-            fill: true,
-            backgroundColor: 'rgba(114, 47, 55, 0.2)',
-            borderColor: '#722F37',
-            borderWidth: 2, // Linea più spessa
-            pointBackgroundColor: '#722F37',
-            pointRadius: 4 // Punti più grandi
-        }]
-    },
-    options: commonChartOptions
-});
-
-// E lo stesso per il grafico del profilo gustativo
-const ctxTaste = document.getElementById('tasteChart');
-new Chart(ctxTaste, {
-    type: 'radar',
-    data: {
-        labels: ['Dolcezza', 'Acidità', 'Corpo', 'Persistenza'],
-        datasets: [{
-            label: 'Profilo',
-            data: [
-                winery.taste_profile.dolcezza,
-                winery.taste_profile.acidità,
-                winery.taste_profile.corpo,
-                winery.taste_profile.persistenza
-            ],
-            fill: true,
-            backgroundColor: 'rgba(47, 114, 55, 0.2)',
-            borderColor: '#2F7237',
-            borderWidth: 2, // Linea più spessa
-            pointBackgroundColor: '#2F7237',
-            pointRadius: 4 // Punti più grandi
-        }]
-    },
-    options: commonChartOptions
-});
-
   panel.style.display = 'block';
   document.body.style.overflow = 'hidden';
 }
@@ -280,10 +249,6 @@ function closeDetails() {
   const panel = document.getElementById('detailsPanel');
   panel.style.display = 'none';
   document.body.style.overflow = 'auto';
-  if (currentChart) {
-    currentChart.destroy();
-    currentChart = null;
-  }
 }
 
 if (!updateCountdown()) {
@@ -293,4 +258,3 @@ if (!updateCountdown()) {
     }
   }, 1000);
 }
-

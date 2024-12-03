@@ -79,6 +79,120 @@ function getCharacteristicColor(characteristic) {
   return characteristicColors[characteristic] || "#722F37"; // Colore default se non mappato
 }
 
+function initViewToggle() {
+  document.body.insertAdjacentHTML('beforeend', `
+    <button class="view-toggle" onclick="toggleView()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      <span>Passa alla Lista</span>
+    </button>
+  `);
+}
+
+
+function toggleView() {
+  const map = document.getElementById("map");
+  const list = document.querySelector(".product-list");
+  const button = document.querySelector(".view-toggle");
+  const span = button.querySelector("span");
+
+  if (map.style.display !== "none") {
+    map.style.display = "none";
+    list.style.width = "100%";
+    list.classList.add("open");
+    span.textContent = "Passa alla Mappa";
+  } else {
+    map.style.display = "block";
+    list.style.width = "300px";
+    list.classList.remove("open");
+    span.textContent = "Passa alla Lista";
+  }
+}
+
+function toggleProductList() {
+  const list = document.querySelector(".product-list");
+  list.classList.toggle("open");
+}
+
+function filterProducts() {
+  const searchTerm = document
+    .querySelector(".search-input")
+    .value.toLowerCase();
+  const typeFilter = document.querySelector(".filter-select").value;
+  const regionFilter = document.querySelectorAll(".filter-select")[1].value;
+
+  const filtered = wineries.filter((winery) => {
+    const matchesSearch =
+      winery.name.toLowerCase().includes(searchTerm) ||
+      winery.wine.toLowerCase().includes(searchTerm);
+    const matchesType = typeFilter === "all" || winery.type === typeFilter;
+    const matchesRegion =
+      regionFilter === "all" || winery.location === regionFilter;
+
+    return matchesSearch && matchesType && matchesRegion;
+  });
+
+  renderProducts(filtered);
+}
+
+function renderProducts(products) {
+  const container = document.querySelector(".products-container");
+  container.innerHTML = products
+    .map(
+      (winery) => `
+    <div class="product-item" onclick="selectProduct('${winery.name}')">
+      <img src="${winery.image}" alt="${winery.wine}" class="product-image">
+      <div class="product-info">
+        <h3 class="product-name">${winery.name}</h3>
+        <p class="product-wine">${winery.wine}</p>
+        <p class="product-location">${winery.location}</p>
+      </div>
+    </div>
+  `
+    )
+    .join("");
+}
+
+function selectProduct(name) {
+  const winery = wineries.find((w) => w.name === name);
+  if (winery) {
+    showDetails(winery);
+    map.setView(winery.coordinates, 10);
+  }
+}
+
+function initProductList() {
+  // Aggiungi HTML
+  document.body.insertAdjacentHTML('beforeend', `
+    <button class="toggle-list" onclick="toggleProductList()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 3v18M3 12h18"></path>
+      </svg>
+    </button>
+    <div class="product-list">
+      <div class="filters">
+        <input type="text" class="search-input" placeholder="Cerca prodotto..." onkeyup="filterProducts()">
+        <select class="filter-select" onchange="filterProducts()">
+          <option value="all">Tutti i prodotti</option>
+          <option value="bianco">Vini Bianchi</option>
+          <option value="spumante">Spumanti</option>
+          <option value="spirits">Distillati</option>
+        </select>
+        <select class="filter-select" onchange="filterProducts()">
+          <option value="all">Tutte le regioni</option>
+          ${[...new Set(wineries.map(w => w.location))].sort().map(region => 
+            `<option value="${region}">${region}</option>`
+          ).join('')}
+        </select>
+      </div>
+      <div class="products-container"></div>
+    </div>
+  `);
+
+  renderProducts(wineries);
+}
+
 function adjustColor(color, amount) {
   const hex = color.replace("#", "");
   const num = parseInt(hex, 16);
@@ -211,6 +325,7 @@ function updateCountdown() {
     countdownElement.style.display = "none";
     mapElement.style.display = "block";
     initMap();
+    initProductList();
     return true;
   }
 
@@ -304,29 +419,32 @@ function formatCharacteristicTags(characteristics, winery) {
 }
 
 function showDetails(winery) {
-  const panel = document.getElementById('detailsPanel');
-  const content = document.getElementById('detailsContent');
-  
+  const panel = document.getElementById("detailsPanel");
+  const content = document.getElementById("detailsContent");
+
   // Calcoliamo la predominanza
   const predominance = calculateCharacteristicsPredominance(winery);
   const characteristicsTags = predominance
-    .map(({characteristic, percentage}) => {
+    .map(({ characteristic, percentage }) => {
       const color = getCharacteristicColor(characteristic);
       const darkColor = adjustColor(color, -20);
       return `
         <span class="characteristic-tag" 
               style="background: linear-gradient(135deg, ${color}, ${darkColor})"
-              data-predominance="${percentage >= 30 ? 'high' : percentage >= 20 ? 'medium' : 'low'}">
+              data-predominance="${
+                percentage >= 30 ? "high" : percentage >= 20 ? "medium" : "low"
+              }">
           ${characteristic}
           <span class="percentage">${percentage}%</span>
         </span>`;
     })
-    .join('');
-  
+    .join("");
+
   // Handle ingredients display based on type
-  const ingredientsTitle = winery.type === 'spirits' ? 'Botaniche' : 'Vitigni';
-  const ingredients = winery.type === 'spirits' ? winery.botanicals : winery.grapes;
-  
+  const ingredientsTitle = winery.type === "spirits" ? "Botaniche" : "Vitigni";
+  const ingredients =
+    winery.type === "spirits" ? winery.botanicals : winery.grapes;
+
   content.innerHTML = `
     <div class="wine-header">
       <div class="wine-image-container">
@@ -350,7 +468,9 @@ function showDetails(winery) {
             <polyline points="15 3 21 3 21 9"/>
             <line x1="10" y1="14" x2="21" y2="3"/>
           </svg>
-          <a href="https://${winery.website}" target="_blank" rel="noopener noreferrer">${winery.website}</a>
+          <a href="https://${
+            winery.website
+          }" target="_blank" rel="noopener noreferrer">${winery.website}</a>
         </div>
         
         <div class="characteristics-section">
@@ -399,7 +519,6 @@ function showDetails(winery) {
   panel.style.display = "block";
   document.body.style.overflow = "hidden";
 }
-
 
 function closeDetails() {
   const panel = document.getElementById("detailsPanel");

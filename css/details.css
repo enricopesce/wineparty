@@ -142,3 +142,64 @@
         grid-template-columns: 1fr;
     }
 }
+
+
+.filters {
+    padding: 15px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .search-input, 
+  .filter-select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .products-container {
+    height: calc(100% - 180px);
+    overflow-y: auto;
+  }
+  
+  .product-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+  }
+  
+  .product-item:hover {
+    background: #f9f9f9;
+  }
+  
+  .product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    float: left;
+    margin-right: 15px;
+  }
+  
+  .product-info {
+    margin-left: 75px;
+  }
+  
+  .product-name {
+    color: #722F37;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .product-wine {
+    color: #666;
+    font-size: 0.9em;
+    margin: 5px 0;
+  }
+  
+  .product-location {
+    color: #888;
+    font-size: 0.8em;
+  }

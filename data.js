@@ -307,38 +307,38 @@ const wineries = [
     grapes: ["Ribolla Gialla"],
     aging: "20-24 mesi sui lieviti"
   },
-  {
-    name: "Isle of Harris",
-    wine: "Gin",
-    location: "Isole Ebridi, Scozia",
-    city: "Tarbert, Isle of Harris",
-    coordinates: [57.9914, -6.8583],
-    description: "Un gin artigianale che cattura l'essenza delle Ebridi scozzesi. La presenza del Sugar Kelp tra le botaniche conferisce un carattere unico e distintivo. Al naso si apre con fresche note di ginepro e agrumi, arricchite da sentori marini e delicate sfumature floreali. Perfetto per gin tonic premium con guarnizioni di agrumi e erbe aromatiche. Ideale anche per cocktail raffinati come il Martini dry con twist di limone o il Negroni. Si sposa bene con antipasti di pesce crudo e ostriche. Double Gold San Francisco World Spirits Competition 2023, Best Scottish Gin ai World Gin Awards e Gold all'International Wine & Spirit Competition.",
-    image: "imgs/Isle of Harris.jpg",
-    type: "spirits",
-    website: "www.harrisdistillery.com",
-    characteristics: {
-      primary: ["agrumato", "marino"],
-      secondary: ["speziato", "floreale"],
-      intensity: {
-        agrumato: 5,
-        marino: 4,
-        speziato: 3,
-        floreale: 2
-      }
-    },
-    taste_profile: {
-      dolcezza: 1,
-      sapidità: 4,
-      intensità: 4,
-      persistenza: 5
-    },
-    awards: [
-      "Double Gold San Francisco World Spirits Competition 2023",
-      "Best Scottish Gin - World Gin Awards",
-      "Gold - International Wine & Spirit Competition"
-    ],
-    botanicals: ["Sugar Kelp", "Ginepro", "Coriandolo", "Angelica", "Scorza d'arancia", "Scorza di lime", "Cubebe", "Cassia", "Radice di iris"],
-    distillation: "Alambicco di rame"
-  }
+  // {
+  //   name: "Isle of Harris",
+  //   wine: "Gin",
+  //   location: "Isole Ebridi, Scozia",
+  //   city: "Tarbert, Isle of Harris",
+  //   coordinates: [57.9914, -6.8583],
+  //   description: "Un gin artigianale che cattura l'essenza delle Ebridi scozzesi. La presenza del Sugar Kelp tra le botaniche conferisce un carattere unico e distintivo. Al naso si apre con fresche note di ginepro e agrumi, arricchite da sentori marini e delicate sfumature floreali. Perfetto per gin tonic premium con guarnizioni di agrumi e erbe aromatiche. Ideale anche per cocktail raffinati come il Martini dry con twist di limone o il Negroni. Si sposa bene con antipasti di pesce crudo e ostriche. Double Gold San Francisco World Spirits Competition 2023, Best Scottish Gin ai World Gin Awards e Gold all'International Wine & Spirit Competition.",
+  //   image: "imgs/Isle of Harris.jpg",
+  //   type: "spirits",
+  //   website: "www.harrisdistillery.com",
+  //   characteristics: {
+  //     primary: ["agrumato", "marino"],
+  //     secondary: ["speziato", "floreale"],
+  //     intensity: {
+  //       agrumato: 5,
+  //       marino: 4,
+  //       speziato: 3,
+  //       floreale: 2
+  //     }
+  //   },
+  //   taste_profile: {
+  //     dolcezza: 1,
+  //     sapidità: 4,
+  //     intensità: 4,
+  //     persistenza: 5
+  //   },
+  //   awards: [
+  //     "Double Gold San Francisco World Spirits Competition 2023",
+  //     "Best Scottish Gin - World Gin Awards",
+  //     "Gold - International Wine & Spirit Competition"
+  //   ],
+  //   botanicals: ["Sugar Kelp", "Ginepro", "Coriandolo", "Angelica", "Scorza d'arancia", "Scorza di lime", "Cubebe", "Cassia", "Radice di iris"],
+  //   distillation: "Alambicco di rame"
+  // }
 ];

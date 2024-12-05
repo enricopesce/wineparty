@@ -116,24 +116,53 @@ function toggleProductList() {
 }
 
 function filterProducts() {
-  const searchTerm = document
-    .querySelector(".search-input")
-    .value.toLowerCase();
+  const searchTerm = document.querySelector(".search-input").value.toLowerCase();
   const typeFilter = document.querySelector(".filter-select").value;
-  const regionFilter = document.querySelectorAll(".filter-select")[1].value;
+  const characteristicFilter = document.querySelectorAll(".filter-select")[1].value;
 
   const filtered = wineries.filter((winery) => {
     const matchesSearch =
       winery.name.toLowerCase().includes(searchTerm) ||
       winery.wine.toLowerCase().includes(searchTerm);
     const matchesType = typeFilter === "all" || winery.type === typeFilter;
-    const matchesRegion =
-      regionFilter === "all" || winery.location === regionFilter;
+    const matchesCharacteristic = characteristicFilter === "all" || 
+      winery.characteristics.primary.includes(characteristicFilter) ||
+      winery.characteristics.secondary.includes(characteristicFilter);
 
-    return matchesSearch && matchesType && matchesRegion;
+    return matchesSearch && matchesType && matchesCharacteristic;
   });
 
+  // Sort by characteristic intensity if a characteristic is selected
+  if (characteristicFilter !== "all") {
+    filtered.sort((a, b) => {
+      const scoreA = getCharacteristicScore(a, characteristicFilter);
+      const scoreB = getCharacteristicScore(b, characteristicFilter);
+      return scoreB - scoreA; // Descending order
+    });
+  }
+
   renderProducts(filtered);
+}
+
+function getCharacteristicScore(winery, characteristic) {
+  let score = 0;
+  
+  // Add points for primary characteristics
+  if (winery.characteristics.primary.includes(characteristic)) {
+    score += 3;
+  }
+  
+  // Add points for secondary characteristics
+  if (winery.characteristics.secondary.includes(characteristic)) {
+    score += 1;
+  }
+  
+  // Add intensity value if available
+  if (winery.characteristics.intensity[characteristic]) {
+    score += winery.characteristics.intensity[characteristic];
+  }
+  
+  return score;
 }
 
 function renderProducts(products) {
@@ -163,7 +192,6 @@ function selectProduct(name) {
 }
 
 function initProductList() {
-  // Aggiungi HTML
   document.body.insertAdjacentHTML('beforeend', `
     <button class="toggle-list" onclick="toggleProductList()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -180,9 +208,9 @@ function initProductList() {
           <option value="spirits">Distillati</option>
         </select>
         <select class="filter-select" onchange="filterProducts()">
-          <option value="all">Tutte le regioni</option>
-          ${[...new Set(wineries.map(w => w.location))].sort().map(region => 
-            `<option value="${region}">${region}</option>`
+          <option value="all">Tutte le caratteristiche</option>
+          ${getAllCharacteristics().map(char => 
+            `<option value="${char}">${char}</option>`
           ).join('')}
         </select>
       </div>
@@ -516,13 +544,13 @@ function showDetails(winery) {
     </div>
   `;
 
-  panel.style.display = "block";
+  panel.classList.add("open");
   document.body.style.overflow = "hidden";
 }
 
 function closeDetails() {
   const panel = document.getElementById("detailsPanel");
-  panel.style.display = "none";
+  panel.classList.remove("open");
   document.body.style.overflow = "auto";
 }
 

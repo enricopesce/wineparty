@@ -1,0 +1,1779 @@
+
+================================================================================
+File: ./data.js
+================================================================================
+
+const unlockDate = new Date('2024-11-01T00:00:00');
+
+const wineries = [
+  {
+    name: "Franz Haas",
+    wine: "Vigneti delle Dolomiti IGT Manna",
+    location: "Alto Adige",
+    city: "Montagna, BZ",
+    coordinates: [46.4102, 11.3548],
+    description: "Un vino che incarna l'essenza delle Dolomiti, il Manna di Franz Haas è una magistrale fusione di quattro vitigni che dona vita a un bianco di straordinaria complessità. Al naso si apre con eleganti note floreali di tiglio e gelsomino, accompagnate da sentori di frutta a polpa bianca e delicate sfumature agrumate. La fermentazione in barrique per Chardonnay e Sauvignon conferisce struttura e profondità, mentre la vinificazione in acciaio di Riesling e Traminer preserva freschezza e aromaticità. Al palato si presenta ampio e avvolgente, con una notevole struttura bilanciata da una vivace mineralità dolomitica. Il finale è lungo e persistente, con un raffinato ritorno di note fruttate e minerali. Perfetto con piatti di pesce strutturati come un rombo al forno con patate, risotto ai frutti di mare, o con carni bianche come il cappone ripieno. Eccellente anche con formaggi di media stagionatura dell'Alto Adige. Ha ottenuto i Tre Bicchieri del Gambero Rosso 2023, confermando la sua eccellenza nel panorama italiano. Il punteggio di 95/100 da Wine Advocate e 94/100 da James Suckling ne attestano il livello internazionale.",
+    image: "imgs/Franz Haas.jpg",
+    type: "bianco",
+    website: "www.franz-haas.it",
+    characteristics: {
+      primary: ["floreale", "strutturato"],
+      secondary: ["minerale", "agrumato"],
+      intensity: {
+        floreale: 5,
+        strutturato: 4,
+        minerale: 3,
+        agrumato: 2
+      }
+    },
+    taste_profile: {
+      dolcezza: 2,
+      acidità: 3,
+      corpo: 4,
+      persistenza: 4
+    },
+    awards: [
+      "Tre Bicchieri Gambero Rosso 2023",
+      "95/100 Wine Advocate",
+      "94/100 James Suckling"
+    ],
+    grapes: ["Riesling", "Chardonnay", "Traminer Aromatico", "Sauvignon Blanc"],
+    aging: "10 mesi sui lieviti"
+  },
+  {
+    name: "Villa Bucci",
+    wine: "Verdicchio dei Castelli di Jesi",
+    location: "Marche",
+    city: "Ostra Vetere, AN",
+    coordinates: [43.4724, 13.2463],
+    description: "Questo Verdicchio rappresenta l'eccellenza delle Marche e la maestria di Villa Bucci nella vinificazione biologica. Al naso si sviluppa un bouquet intenso e complesso, dove spiccano note di frutta gialla matura, mandorla fresca e delicati sentori di fiori bianchi. La mineralità, tipica del terroir, si esprime con eleganti note salmastre. Al palato colpisce per la sua straordinaria freschezza e sapidità, perfettamente bilanciate da una struttura importante. Il finale è lungo e persistente, caratterizzato dal tipico retrogusto ammandorlato del Verdicchio. Ideale con piatti della tradizione marchigiana come il brodetto di pesce all'anconetana, ma anche con primi piatti a base di pesce come gli spaghetti alle vongole. Eccellente con pesci al forno e crostacei alla griglia. Premiato con i Tre Bicchieri del Gambero Rosso 2023, 93/100 da Wine Enthusiast e la Corona Vinibuoni d'Italia, confermandosi come riferimento assoluto per la denominazione.",
+    image: "imgs/Villa Bucci.jpg",
+    type: "bianco",
+    website: "www.villabucci.com",
+    characteristics: {
+      primary: ["fruttato", "minerale"],
+      secondary: ["mandorlato", "floreale"],
+      intensity: {
+        fruttato: 5,
+        minerale: 4,
+        mandorlato: 3,
+        floreale: 2
+      }
+    },
+    taste_profile: {
+      dolcezza: 1,
+      acidità: 4,
+      corpo: 3,
+      persistenza: 4
+    },
+    awards: [
+      "Tre Bicchieri Gambero Rosso 2023",
+      "93/100 Wine Enthusiast",
+      "Corona Vinibuoni d'Italia"
+    ],
+    grapes: ["Verdicchio"],
+    aging: "6 mesi in acciaio"
+  },
+  {
+    name: "Masciarelli",
+    wine: "Trebbiano d'Abruzzo",
+    location: "Abruzzo",
+    city: "San Martino sulla Marrucina, CH",
+    coordinates: [42.3500, 14.1500],
+    description: "Un'interpretazione moderna e raffinata del Trebbiano d'Abruzzo, che sfida gli stereotipi di questo vitigno. Al naso offre un bouquet fresco e invitante di agrumi, pera williams e fiori di campo, con sottili note minerali che richiamano la pietra bagnata. La vinificazione in acciaio esalta la purezza del frutto e la tipicità varietale. Al palato si distingue per una notevole freschezza acidula, ben bilanciata da una struttura media e una piacevole sapidità. Perfetto con i piatti della cucina abruzzese come gli spaghetti alla chitarra con pallottine, ma anche con pesci azzurri alla griglia, fritture di paranza e formaggi freschi. Ha ricevuto le Quattro Viti dell'Associazione Italiana Sommelier, 91/100 da Wine Spectator e i Due Bicchieri del Gambero Rosso.",
+    image: "imgs/Masciarelli.jpg",
+    type: "bianco",
+    website: "www.masciarelli.it",
+    characteristics: {
+      primary: ["fruttato", "fresco"],
+      secondary: ["floreale", "minerale"],
+      intensity: {
+        fruttato: 4,
+        fresco: 5,
+        floreale: 3,
+        minerale: 2
+      }
+    },
+    taste_profile: {
+      dolcezza: 2,
+      acidità: 4,
+      corpo: 3,
+      persistenza: 3
+    },
+    awards: [
+      "Quattro Viti Associazione Italiana Sommelier",
+      "91/100 Wine Spectator",
+      "Due Bicchieri Gambero Rosso"
+    ],
+    grapes: ["Trebbiano"],
+    aging: "Acciaio e bottiglia"
+  },
+  {
+    name: "Cantina di Santadi",
+    wine: "Vermentino di Sardegna",
+    location: "Sardegna",
+    city: "Santadi, SU",
+    coordinates: [39.0833, 8.7167],
+    description: "Il Cala Silente è un perfetto ambasciatore del Vermentino sardo. L'affinamento sui lieviti in vasche di cemento conferisce al vino complessità e rotondità, mantenendo intatta la tipicità varietale. Al naso si presenta con intense note di agrumi mediterranei, erbe aromatiche e fiori di macchia mediterranea, con un sottofondo salino che richiama la brezza marina. Al palato è fresco e sapido, con una struttura media e un perfetto equilibrio. Eccellente con la cucina di mare sarda, come la fregola ai frutti di mare, bottarga di muggine grattugiata e arselle alla marinara. Ottimo anche con pesci alla griglia e crostacei. Medaglia d'Oro al Concours Mondial de Bruxelles, 92/100 Falstaff e Due Bicchieri del Gambero Rosso.",
+    image: "imgs/Cantina di Santadi.jpg",
+    type: "bianco",
+    website: "www.cantinadisantadi.it",
+    characteristics: {
+      primary: ["fruttato", "agrumato"],
+      secondary: ["minerale", "floreale"],
+      intensity: {
+        fruttato: 4,
+        agrumato: 5,
+        minerale: 3,
+        floreale: 2
+      }
+    },
+    taste_profile: {
+      dolcezza: 2,
+      acidità: 4,
+      corpo: 3,
+      persistenza: 4
+    },
+    awards: [
+      "Medaglia d'Oro Concours Mondial Bruxelles",
+      "92/100 Falstaff",
+      "Due Bicchieri Gambero Rosso"
+    ],
+    grapes: ["Vermentino"],
+    aging: "Cemento sui lieviti"
+  },
+  {
+    name: "Pieropan",
+    wine: "Soave Classico",
+    location: "Veneto",
+    city: "Soave, VR",
+    coordinates: [45.4219, 11.2266],
+    description: "Il Calvarino di Pieropan è l'espressione più pura e tradizionale del Soave Classico. La maturazione in cemento per un anno conferisce al vino complessità preservando la freschezza. Al naso si apre con eleganti note di fiori bianchi, mandorla fresca e frutta a polpa bianca, arricchite da sottili sfumature minerali che richiamano la pietra vulcanica. Ideale con i primi piatti della tradizione veneta come il risotto all'isolana, ma anche con pesce d'acqua dolce al forno, carni bianche delicate e formaggi freschi locali. Tre Bicchieri del Gambero Rosso 2023, 94/100 da Decanter e 95/100 da James Suckling.",
+    image: "imgs/Pieropan.jpg",
+    type: "bianco",
+    website: "www.pieropan.it",
+    characteristics: {
+      primary: ["fruttato", "floreale"],
+      secondary: ["minerale", "mandorlato"],
+      intensity: {
+        fruttato: 5,
+        floreale: 4,
+        minerale: 3,
+        mandorlato: 2
+      }
+    },
+    taste_profile: {
+      dolcezza: 2,
+      acidità: 4,
+      corpo: 3,
+      persistenza: 4
+    },
+    awards: [
+      "Tre Bicchieri Gambero Rosso 2023",
+      "94/100 Decanter",
+      "95/100 James Suckling"
+    ],
+    grapes: ["Garganega", "Trebbiano di Soave"],
+    aging: "12 mesi in cemento"
+  },
+  {
+    name: "Vigneti Massa",
+    wine: "Derthona",
+    location: "Piemonte",
+    city: "Monleale, AL",
+    coordinates: [44.8833, 8.9667],
+    description: "Il Derthona di Walter Massa è un vino che ha riscoperto e valorizzato il vitigno Timorasso. La breve macerazione sulle bucce e l'affinamento in acciaio e cemento donano al vino complessità e longevità. Al naso presenta un bouquet articolato di frutti bianchi maturi, erbe aromatiche e intense note minerali, con sfumature di idrocarburi che ricordano il Riesling. Si sposa perfettamente con piatti strutturati come agnolotti al sugo d'arrosto, vitello tonnato e formaggi stagionati. Ottimo anche con pesci grassi come il salmone e piatti a base di tartufo. Tre Bicchieri del Gambero Rosso 2023, 93/100 Wine Advocate e Corona Vinibuoni d'Italia.",
+    image: "imgs/Vigneti Massa.jpg",
+    type: "bianco",
+    website: "vignetimassa.com",
+    characteristics: {
+      primary: ["minerale", "floreale"],
+      secondary: ["agrumato", "speziato"],
+      intensity: {
+        minerale: 5,
+        floreale: 4,
+        agrumato: 3,
+        speziato: 2
+      }
+    },
+    taste_profile: {
+      dolcezza: 1,
+      acidità: 4,
+      corpo: 4,
+      persistenza: 5
+    },
+    awards: [
+      "Tre Bicchieri Gambero Rosso 2023",
+      "93/100 Wine Advocate",
+      "Corona Vinibuoni d'Italia"
+    ],
+    grapes: ["Timorasso"],
+    aging: "Acciaio e cemento, 6 mesi in bottiglia"
+  },
+  {
+    name: "Arianna Occhipinti",
+    wine: "Terre Siciliane",
+    location: "Sicilia",
+    city: "Vittoria, RG",
+    coordinates: [36.9253, 14.7519],
+    description: "Un vino naturale che esprime l'essenza della Sicilia sud-orientale. La fermentazione spontanea e l'affinamento in cemento preservano la purezza delle uve Albanello e Moscato. Al naso si presenta con un bouquet complesso di agrumi mediterranei, erbe aromatiche e fiori bianchi, con note minerali che richiamano la pietra calcarea. Perfetto con la cucina siciliana di mare, come pasta con le sarde, pesce spada alla ghiotta e caponata. Ottimo anche con formaggi freschi e primi piatti con le verdure. 5 Grappoli Bibenda, 95/100 Vinous e inserito nella Top 100 di Wine Enthusiast.",
+    image: "imgs/Arianna Occhipinti.jpg",
+    type: "bianco",
+    website: "www.agricolaocchipinti.it",
+    characteristics: {
+      primary: ["minerale", "aromatico"],
+      secondary: ["floreale", "agrumato"],
+      intensity: {
+        minerale: 5,
+        aromatico: 4,
+        floreale: 3,
+        agrumato: 3
+      }
+    },
+    taste_profile: {
+      dolcezza: 2,
+      acidità: 4,
+      corpo: 3,
+      persistenza: 4
+    },
+    awards: [
+      "5 Grappoli Bibenda",
+      "95/100 Vinous",
+      "Top 100 Wine Enthusiast"
+    ],
+    grapes: ["Albanello", "Moscato d'Alessandria"],
+    aging: "7 mesi in cemento"
+  },
+  {
+    name: "Oltrenero",
+    wine: "Oltrepò Pavese",
+    location: "Lombardia",
+    city: "Casteggio, PV",
+    coordinates: [44.9833, 9.1500],
+    description: "Un metodo classico rosé che rappresenta l'eccellenza dell'Oltrepò Pavese. I 36 mesi sui lieviti conferiscono grande complessità. Al naso offre un bouquet elegante di piccoli frutti rossi, crosta di pane e delicate note floreali. Il perlage è fine e persistente. Ideale come aperitivo, si abbina perfettamente con antipasti di pesce crudo, risotto alla milanese e salumi delicati. Ottimo anche con crostacei e pesci grassi. 4 Sfere Sparkle, 90/100 Wine Spectator e Corona Vinibuoni d'Italia.",
+    image: "imgs/Oltrenero.jpg",
+    type: "spumante",
+    website: "www.oltrenero.it",
+    characteristics: {
+      primary: ["fruttato", "cremoso"],
+      secondary: ["floreale", "crosta di pane"],
+      intensity: {
+        fruttato: 4,
+        cremoso: 5,
+        floreale: 3,
+        "crosta di pane": 4
+      }
+    },
+    taste_profile: {
+      dolcezza: 2,
+      acidità: 4,
+      corpo: 3,
+      persistenza: 4
+    },
+    awards: [
+      "4 Sfere Sparkle",
+      "90/100 Wine Spectator",
+      "Corona Vinibuoni d'Italia"
+    ],
+    grapes: ["Pinot Nero"],
+    aging: "36 mesi sui lieviti"
+  },
+  {
+    name: "Puiatti",
+    wine: "Vino Spumante Ribolla Gialla",
+    location: "Friuli Venezia Giulia",
+    city: "Romans d'Isonzo, GO",
+    coordinates: [45.9500, 13.4167],
+    description: "Uno spumante metodo classico che valorizza la Ribolla Gialla friulana. L'affinamento sui lieviti per oltre 20 mesi dona eleganza e complessità. Al naso presenta note fresche di fiori bianchi, mela verde e agrumi, con delicate sfumature di crosta di pane. Il perlage è fine e persistente. Perfetto con il prosciutto San Daniele, ottimo con antipasti di pesce, risotti delicati e fritture di pesce dell'Adriatico. Ideale anche come aperitivo. Due Bicchieri Gambero Rosso, 91/100 Wine Enthusiast e 4 Sfere Sparkle.",
+    image: "imgs/Puiatti.jpg",
+    type: "spumante",
+    website: "www.puiatti.com",
+    characteristics: {
+      primary: ["floreale", "fresco"],
+      secondary: ["fruttato", "minerale"],
+      intensity: {
+        floreale: 4,
+        fresco: 5,
+        fruttato: 3,
+        minerale: 3
+      }
+    },
+    taste_profile: {
+      dolcezza: 2,
+      acidità: 4,
+      corpo: 3,
+      persistenza: 4
+    },
+    awards: [
+      "Due Bicchieri Gambero Rosso",
+      "91/100 Wine Enthusiast",
+      "4 Sfere Sparkle"
+    ],
+    grapes: ["Ribolla Gialla"],
+    aging: "20-24 mesi sui lieviti"
+  },
+  // {
+  //   name: "Isle of Harris",
+  //   wine: "Gin",
+  //   location: "Isole Ebridi, Scozia",
+  //   city: "Tarbert, Isle of Harris",
+  //   coordinates: [57.9914, -6.8583],
+  //   description: "Un gin artigianale che cattura l'essenza delle Ebridi scozzesi. La presenza del Sugar Kelp tra le botaniche conferisce un carattere unico e distintivo. Al naso si apre con fresche note di ginepro e agrumi, arricchite da sentori marini e delicate sfumature floreali. Perfetto per gin tonic premium con guarnizioni di agrumi e erbe aromatiche. Ideale anche per cocktail raffinati come il Martini dry con twist di limone o il Negroni. Si sposa bene con antipasti di pesce crudo e ostriche. Double Gold San Francisco World Spirits Competition 2023, Best Scottish Gin ai World Gin Awards e Gold all'International Wine & Spirit Competition.",
+  //   image: "imgs/Isle of Harris.jpg",
+  //   type: "spirits",
+  //   website: "www.harrisdistillery.com",
+  //   characteristics: {
+  //     primary: ["agrumato", "marino"],
+  //     secondary: ["speziato", "floreale"],
+  //     intensity: {
+  //       agrumato: 5,
+  //       marino: 4,
+  //       speziato: 3,
+  //       floreale: 2
+  //     }
+  //   },
+  //   taste_profile: {
+  //     dolcezza: 1,
+  //     sapidità: 4,
+  //     intensità: 4,
+  //     persistenza: 5
+  //   },
+  //   awards: [
+  //     "Double Gold San Francisco World Spirits Competition 2023",
+  //     "Best Scottish Gin - World Gin Awards",
+  //     "Gold - International Wine & Spirit Competition"
+  //   ],
+  //   botanicals: ["Sugar Kelp", "Ginepro", "Coriandolo", "Angelica", "Scorza d'arancia", "Scorza di lime", "Cubebe", "Cassia", "Radice di iris"],
+  //   distillation: "Alambicco di rame"
+  // }
+];
+
+================================================================================
+File: ./scripts.js
+================================================================================
+
+let map;
+const countdownElement = document.getElementById("countdown");
+const mapElement = document.getElementById("map");
+
+const markerColors = {
+  bianco: "#FFD700", // Oro per i vini bianchi
+  spumante: "#87CEEB", // Azzurro per gli spumanti
+  spirits: "#9370DB", // Viola per gli spirits
+};
+
+const characteristicColors = {
+  // Aromatici/Floreali
+  floreale: "#9B6B9E", // Viola chiaro
+  aromatico: "#9B6B9E",
+
+  // Fruttati/Agrumati
+  fruttato: "#E9967A", // Pesca
+  agrumato: "#FFB347", // Arancione
+
+  // Struttura/Corpo
+  strutturato: "#8B4513", // Marrone
+  cremoso: "#DEB887", // Beige
+
+  // Minerali/Freschi
+  minerale: "#87CEEB", // Azzurro
+  fresco: "#20B2AA", // Turchese
+
+  // Speziati/Complessi
+  speziato: "#CD853F", // Terra di Siena
+  marino: "#4682B4", // Blu acciaio
+
+  // Altro
+  mandorlato: "#DEB887", // Beige
+  "crosta di pane": "#D2691E", // Marrone chiaro
+};
+
+const getTasteDescription = {
+  // Wine characteristics
+  dolcezza: (value) => ({
+    label: "Dolcezza",
+    left: "Secco",
+    right: "Dolce",
+    value: value * 20,
+  }),
+  acidità: (value) => ({
+    label: "Acidità",
+    left: "Morbido",
+    right: "Fresco",
+    value: value * 20,
+  }),
+  corpo: (value) => ({
+    label: "Corpo",
+    left: "Leggero",
+    right: "Strutturato",
+    value: value * 20,
+  }),
+  persistenza: (value) => ({
+    label: "Persistenza",
+    left: "Breve",
+    right: "Lunga",
+    value: value * 20,
+  }),
+  // Spirits characteristics
+  sapidità: (value) => ({
+    label: "Sapidità",
+    left: "Delicato",
+    right: "Intenso",
+    value: value * 20,
+  }),
+  intensità: (value) => ({
+    label: "Intensità",
+    left: "Leggera",
+    right: "Forte",
+    value: value * 20,
+  }),
+};
+
+function getCharacteristicColor(characteristic) {
+  return characteristicColors[characteristic] || "#722F37"; // Colore default se non mappato
+}
+
+function initViewToggle() {
+  document.body.insertAdjacentHTML('beforeend', `
+    <button class="view-toggle" onclick="toggleView()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      <span>Passa alla Lista</span>
+    </button>
+  `);
+}
+
+
+function toggleView() {
+  const map = document.getElementById("map");
+  const list = document.querySelector(".product-list");
+  const button = document.querySelector(".view-toggle");
+  const span = button.querySelector("span");
+
+  if (map.style.display !== "none") {
+    map.style.display = "none";
+    list.style.width = "100%";
+    list.classList.add("open");
+    span.textContent = "Passa alla Mappa";
+  } else {
+    map.style.display = "block";
+    list.style.width = "300px";
+    list.classList.remove("open");
+    span.textContent = "Passa alla Lista";
+  }
+}
+
+function toggleProductList() {
+  const list = document.querySelector(".product-list");
+  list.classList.toggle("open");
+}
+
+function filterProducts() {
+  const searchTerm = document.querySelector(".search-input").value.toLowerCase();
+  const typeFilter = document.querySelector(".filter-select").value;
+  const characteristicFilter = document.querySelectorAll(".filter-select")[1].value;
+
+  const filtered = wineries.filter((winery) => {
+    const matchesSearch =
+      winery.name.toLowerCase().includes(searchTerm) ||
+      winery.wine.toLowerCase().includes(searchTerm);
+    const matchesType = typeFilter === "all" || winery.type === typeFilter;
+    const matchesCharacteristic = characteristicFilter === "all" || 
+      winery.characteristics.primary.includes(characteristicFilter) ||
+      winery.characteristics.secondary.includes(characteristicFilter);
+
+    return matchesSearch && matchesType && matchesCharacteristic;
+  });
+
+  // Sort by characteristic intensity if a characteristic is selected
+  if (characteristicFilter !== "all") {
+    filtered.sort((a, b) => {
+      const scoreA = getCharacteristicScore(a, characteristicFilter);
+      const scoreB = getCharacteristicScore(b, characteristicFilter);
+      return scoreB - scoreA; // Descending order
+    });
+  }
+
+  renderProducts(filtered);
+}
+
+function getCharacteristicScore(winery, characteristic) {
+  let score = 0;
+  
+  // Add points for primary characteristics
+  if (winery.characteristics.primary.includes(characteristic)) {
+    score += 3;
+  }
+  
+  // Add points for secondary characteristics
+  if (winery.characteristics.secondary.includes(characteristic)) {
+    score += 1;
+  }
+  
+  // Add intensity value if available
+  if (winery.characteristics.intensity[characteristic]) {
+    score += winery.characteristics.intensity[characteristic];
+  }
+  
+  return score;
+}
+
+function renderProducts(products) {
+  const container = document.querySelector(".products-container");
+  container.innerHTML = products
+    .map(
+      (winery) => `
+    <div class="product-item" onclick="selectProduct('${winery.name}')">
+      <img src="${winery.image}" alt="${winery.wine}" class="product-image">
+      <div class="product-info">
+        <h3 class="product-name">${winery.name}</h3>
+        <p class="product-wine">${winery.wine}</p>
+        <p class="product-location">${winery.location}</p>
+      </div>
+    </div>
+  `
+    )
+    .join("");
+}
+
+function selectProduct(name) {
+  const winery = wineries.find((w) => w.name === name);
+  if (winery) {
+    showDetails(winery);
+    map.setView(winery.coordinates, 10);
+  }
+}
+
+function initProductList() {
+  document.body.insertAdjacentHTML('beforeend', `
+    <button class="toggle-list" onclick="toggleProductList()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 3v18M3 12h18"></path>
+      </svg>
+    </button>
+    <div class="product-list">
+      <div class="filters">
+        <input type="text" class="search-input" placeholder="Cerca prodotto..." onkeyup="filterProducts()">
+        <select class="filter-select" onchange="filterProducts()">
+          <option value="all">Tutti i prodotti</option>
+          <option value="bianco">Vini Bianchi</option>
+          <option value="spumante">Spumanti</option>
+          <option value="spirits">Distillati</option>
+        </select>
+        <select class="filter-select" onchange="filterProducts()">
+          <option value="all">Tutte le caratteristiche</option>
+          ${getAllCharacteristics().map(char => 
+            `<option value="${char}">${char}</option>`
+          ).join('')}
+        </select>
+      </div>
+      <div class="products-container"></div>
+    </div>
+  `);
+
+  renderProducts(wineries);
+}
+
+function adjustColor(color, amount) {
+  const hex = color.replace("#", "");
+  const num = parseInt(hex, 16);
+  const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+  const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amount));
+  const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amount));
+  return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
+}
+
+function formatTasteProfile(tasteProfile) {
+  return Object.entries(tasteProfile)
+    .filter(([characteristic]) => characteristic in getTasteDescription) // Only process known characteristics
+    .map(([characteristic, value]) => {
+      const description = getTasteDescription[characteristic](value);
+      return `
+        <div class="taste-characteristic">
+          <div class="taste-header">
+            <span class="taste-label">${description.label}</span>
+          </div>
+          <div class="taste-bar-container">
+            <span class="taste-label-left">${description.left}</span>
+            <div class="taste-bar-wrapper">
+              <div class="taste-bar" style="width: ${description.value}%">
+                <div class="taste-bar-indicator"></div>
+              </div>
+            </div>
+            <span class="taste-label-right">${description.right}</span>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function updateMarkers() {
+  console.log("updateMarkers called");
+  if (!map) {
+    console.error("Map not initialized!");
+    return;
+  }
+
+  console.log("Current wineries:", wineries);
+
+  map.eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      map.removeLayer(layer);
+    }
+  });
+
+  wineries.forEach((winery) => {
+    console.log(
+      "Creating marker for:",
+      winery.name,
+      "at coordinates:",
+      winery.coordinates
+    );
+
+    const marker = L.marker(winery.coordinates, {
+      icon: createCustomIcon(winery.type),
+    });
+
+    marker.bindTooltip(winery.name, {
+      permanent: false,
+      direction: "top",
+    });
+
+    marker.on("click", () => showDetails(winery));
+    marker.addTo(map);
+  });
+}
+
+function createCustomIcon(type) {
+  console.log(
+    "Creating icon for type:",
+    type,
+    "with color:",
+    markerColors[type]
+  );
+
+  return L.divIcon({
+    className: "custom-marker",
+    html: `<div style="
+      position: absolute;
+      background-color: ${markerColors[type]};
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      "></div>`,
+    iconSize: [25, 25],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12],
+  });
+}
+
+function initMap() {
+  console.log("initMap called");
+  map = L.map("map", {
+    zoomControl: false,
+    dragging: true, // Enable dragging on all devices
+    tap: true, // Enable tap for touch devices
+    touchZoom: true, // Enable touch zoom
+    scrollWheelZoom: true, // Enable scroll wheel zoom
+  }).setView([42.8333, 12.8333], 6);
+
+  L.control
+    .zoom({
+      position: "topright",
+    })
+    .addTo(map);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "© OpenStreetMap contributors",
+  }).addTo(map);
+
+  console.log("Calling updateMarkers");
+  updateMarkers();
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = unlockDate - now;
+
+  if (diff <= 0) {
+    countdownElement.style.display = "none";
+    mapElement.style.display = "block";
+    initMap();
+    initProductList();
+    return true;
+  }
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const timerDiv = countdownElement.querySelector("div");
+  timerDiv.textContent = `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  return false;
+}
+
+function getAllCharacteristics() {
+  const characteristicsSet = new Set();
+
+  wineries.forEach((winery) => {
+    winery.characteristics.primary.forEach((char) =>
+      characteristicsSet.add(char)
+    );
+    winery.characteristics.secondary.forEach((char) =>
+      characteristicsSet.add(char)
+    );
+  });
+
+  return Array.from(characteristicsSet).sort();
+}
+
+function calculateCharacteristicsPredominance(winery) {
+  // Creiamo un oggetto per tenere traccia dei punteggi totali
+  let scores = {};
+  let totalScore = 0;
+
+  // Assegniamo pesi alle caratteristiche primarie e secondarie
+  winery.characteristics.primary.forEach((char) => {
+    scores[char] = scores[char] || 0;
+    scores[char] += 3; // Peso maggiore per caratteristiche primarie
+    totalScore += 3;
+  });
+
+  winery.characteristics.secondary.forEach((char) => {
+    scores[char] = scores[char] || 0;
+    scores[char] += 1; // Peso minore per caratteristiche secondarie
+    totalScore += 1;
+  });
+
+  // Aggiungiamo i valori di intensità quando disponibili
+  Object.entries(winery.characteristics.intensity).forEach(
+    ([char, intensity]) => {
+      if (scores[char]) {
+        scores[char] += intensity; // Aggiungiamo l'intensità al punteggio
+        totalScore += intensity;
+      }
+    }
+  );
+
+  // Calcoliamo le percentuali e ordiniamo per predominanza
+  const percentages = Object.entries(scores)
+    .map(([char, score]) => ({
+      characteristic: char,
+      percentage: Math.round((score / totalScore) * 100),
+    }))
+    .sort((a, b) => b.percentage - a.percentage);
+
+  return percentages;
+}
+
+function formatCharacteristicTags(characteristics, winery) {
+  const predominance = calculateCharacteristicsPredominance(winery);
+
+  return predominance
+    .map(
+      ({ characteristic, percentage }) =>
+        `<span class="characteristic-tag" 
+           style="background: linear-gradient(135deg, 
+                                           ${getCharacteristicColor(
+                                             characteristic
+                                           )}, 
+                                           ${adjustColor(
+                                             getCharacteristicColor(
+                                               characteristic
+                                             ),
+                                             -20
+                                           )})">
+      ${characteristic}
+      <span class="percentage">${percentage}%</span>
+     </span>`
+    )
+    .join("");
+}
+
+function showDetails(winery) {
+  const panel = document.getElementById("detailsPanel");
+  const content = document.getElementById("detailsContent");
+
+  // Calcoliamo la predominanza
+  const predominance = calculateCharacteristicsPredominance(winery);
+  const characteristicsTags = predominance
+    .map(({ characteristic, percentage }) => {
+      const color = getCharacteristicColor(characteristic);
+      const darkColor = adjustColor(color, -20);
+      return `
+        <span class="characteristic-tag" 
+              style="background: linear-gradient(135deg, ${color}, ${darkColor})"
+              data-predominance="${
+                percentage >= 30 ? "high" : percentage >= 20 ? "medium" : "low"
+              }">
+          ${characteristic}
+          <span class="percentage">${percentage}%</span>
+        </span>`;
+    })
+    .join("");
+
+  // Handle ingredients display based on type
+  const ingredientsTitle = winery.type === "spirits" ? "Botaniche" : "Vitigni";
+  const ingredients =
+    winery.type === "spirits" ? winery.botanicals : winery.grapes;
+
+  content.innerHTML = `
+    <div class="wine-header">
+      <div class="wine-image-container">
+        <img src="${winery.image}" alt="${winery.wine}" class="details-image">
+      </div>
+      <div class="wine-info">
+        <h1 class="details-title">${winery.name}</h1>
+        <h2 class="details-subtitle">${winery.wine}</h2>
+        <h2 class="details-subtitle"></h2>
+        <div class="wine-location">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          </svg>
+          ${winery.location} - ${winery.city}
+        </div>
+        
+        <!-- Aggiunto il link al sito web -->
+        <div class="wine-website">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          <a href="https://${
+            winery.website
+          }" target="_blank" rel="noopener noreferrer">${winery.website}</a>
+        </div>
+        
+        <div class="characteristics-section">
+          <h3 class="section-title">Caratteristiche</h3>
+          <div class="characteristics-list">
+            ${characteristicsTags}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="taste-profile-section">
+      <h3 class="section-title">Profilo ${
+        winery.type === "spirits" ? "Organolettico" : "Gustativo"
+      }</h3>
+      <div class="taste-profile-grid">
+        ${formatTasteProfile(winery.taste_profile)}
+      </div>
+    </div>
+
+    <div class="additional-info">
+      <p><strong>${ingredientsTitle}:</strong> ${ingredients.join(", ")}</p>
+      ${
+        winery.aging
+          ? `<p><strong>${
+              winery.type === "spirits" ? "Distillazione" : "Affinamento"
+            }:</strong> ${winery.aging}</p>`
+          : ""
+      }
+      ${
+        winery.awards && winery.awards.length > 0
+          ? `
+        <p><strong>Riconoscimenti:</strong></p>
+        <ul class="awards-list">
+          ${winery.awards.map((award) => `<li>${award}</li>`).join("")}
+        </ul>
+      `
+          : ""
+      }
+    </div>
+
+    <div class="details-description">
+      ${winery.description}
+    </div>
+  `;
+
+  panel.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeDetails() {
+  const panel = document.getElementById("detailsPanel");
+  panel.classList.remove("open");
+  document.body.style.overflow = "auto";
+}
+
+if (!updateCountdown()) {
+  const interval = setInterval(() => {
+    if (updateCountdown()) {
+      clearInterval(interval);
+    }
+  }, 1000);
+}
+
+
+================================================================================
+File: ./css/components.css
+================================================================================
+
+.close-button {
+    background: none;
+    font-size: 28px;
+    color: #722F37;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    background: rgba(114, 47, 55, 0.1);
+}
+
+.characteristic-tag {
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.characteristic-tag .percentage {
+    font-size: 0.8em;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 12px;
+}
+
+.characteristics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+/* Aggiungiamo classi per le fasce di predominanza */
+.characteristic-tag[data-predominance="high"] {
+    font-weight: 600;
+    padding: 10px 18px;
+}
+
+.characteristic-tag[data-predominance="medium"] {
+    opacity: 0.9;
+}
+
+.characteristic-tag[data-predominance="low"] {
+    opacity: 0.8;
+    font-size: 0.85em;
+}
+
+.section-title {
+    font-size: 1.3em;
+    color: #722F37;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.characteristics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.characteristic-tag {
+    background: linear-gradient(135deg, #722F37, #8B3741);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.wine-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #888;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.awards-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.awards-list li {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.additional-info {
+    background: rgba(248, 248, 248, 0.7);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 30px 0;
+}
+
+.additional-info p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #444;
+}
+
+.additional-info strong {
+    color: #722F37;
+}
+
+.toggle-list,
+.view-toggle {
+  position: fixed;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.toggle-list {
+  left: 20px;
+  top: 20px;
+  z-index: 1002;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.view-toggle {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1002;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 500;
+  color: #722F37;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-toggle:hover {
+  background: #f5f5f5;
+}
+
+================================================================================
+File: ./css/details.css
+================================================================================
+
+.details-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+  z-index: 9999;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  visibility: hidden;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.details-panel.open {
+  transform: translateX(0);
+  visibility: visible;
+  opacity: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.details-hero {
+  position: relative;
+  height: 40vh;
+  min-height: 300px;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+}
+
+.wine-name {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.wine-type {
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin: 5px 0;
+}
+
+.wine-meta {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+.details-sections {
+  padding: 20px;
+}
+
+.details-section {
+  margin-bottom: 30px;
+}
+
+.details-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.characteristics-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.characteristic-tag {
+  padding: 8px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.taste-profile-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.technical-details {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.detail-item {
+  margin-bottom: 15px;
+}
+
+.detail-item h4 {
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.awards-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.award-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.wine-description {
+  line-height: 1.6;
+  color: #333;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+}
+
+.details-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.details-content {
+  width: 90%;
+  max-width: 1600px; /* Increased max-width */
+  margin: 0 auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+}
+
+.wine-header {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) 1fr;
+  gap: 60px;
+  margin-bottom: 40px;
+  align-items: start;
+}
+
+/* Content sections full width */
+.taste-profile-section,
+.additional-info,
+.details-description {
+  width: 100%;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(248, 248, 248, 0.7);
+  border-radius: 15px;
+}
+
+/* Taste profile specific adjustments */
+.taste-profile-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.taste-characteristic {
+  width: 100%;
+}
+
+.taste-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Increased gap */
+  width: 100%;
+}
+
+.taste-label-left,
+.taste-label-right {
+  font-size: 0.95em;
+  color: #666;
+  min-width: 80px; /* Increased min-width */
+}
+
+.taste-bar-wrapper {
+  flex-grow: 1;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* Awards and additional info */
+.awards-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.awards-list li {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 15px 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .details-content {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .wine-header {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .wine-image-container {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .taste-profile-grid {
+    padding: 0 20px;
+  }
+
+  .taste-bar-container {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .taste-profile-grid {
+    padding: 0;
+  }
+
+  .awards-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.filters {
+  padding: 15px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-input,
+.filter-select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.products-container {
+  height: calc(100% - 180px);
+  overflow-y: auto;
+}
+
+.product-item {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.product-item:hover {
+  background: #f9f9f9;
+}
+
+.product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  float: left;
+  margin-right: 15px;
+}
+
+.product-info {
+  margin-left: 75px;
+}
+
+.product-name {
+  color: #722f37;
+  font-weight: 500;
+  margin: 0;
+}
+
+.product-wine {
+  color: #666;
+  font-size: 0.9em;
+  margin: 5px 0;
+}
+
+.product-location {
+  color: #888;
+  font-size: 0.8em;
+}
+
+/* Mobile-optimized Details Panel */
+@media (max-width: 768px) {
+  .details-panel {
+    width: 100%;
+    height: 100vh;
+    padding: 0;
+  }
+
+  .details-content {
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  /* Optimize header for mobile */
+  .details-header {
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .details-header h2 {
+    font-size: 1.2rem;
+  }
+
+  /* Restructure wine header for mobile */
+  .wine-header {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+
+  .wine-image-container {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 250px;
+  }
+
+  .details-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Optimize wine info section */
+  .wine-info {
+    padding: 0 10px;
+  }
+
+  .details-title {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+
+  .details-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .wine-location, .wine-website {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  /* Optimize characteristics tags */
+  .characteristics-list {
+    gap: 8px;
+    margin: 10px 0;
+  }
+
+  .characteristic-tag {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* Optimize taste profile section */
+  .taste-profile-section {
+    padding: 20px 15px;
+    margin: 20px 0;
+  }
+
+  .taste-profile-grid {
+    gap: 20px;
+  }
+
+  .taste-bar-container {
+    gap: 10px;
+  }
+
+  .taste-label-left,
+  .taste-label-right {
+    font-size: 0.8rem;
+    min-width: 60px;
+  }
+
+  /* Optimize additional info section */
+  .additional-info {
+    padding: 20px 15px;
+    margin: 20px 0;
+  }
+
+  .additional-info p {
+    font-size: 0.95rem;
+    margin: 8px 0;
+  }
+
+  /* Optimize awards list */
+  .awards-list li {
+    padding: 12px;
+    margin: 6px 0;
+    font-size: 0.9rem;
+  }
+
+  /* Optimize description */
+  .details-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 0 5px;
+  }
+
+  /* Improve scrolling experience */
+  .details-panel {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Make close button easier to tap */
+  .close-button {
+    width: 44px;
+    height: 44px;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+/* Additional improvements for very small screens */
+@media (max-width: 375px) {
+  .details-content {
+    padding: 15px;
+  }
+
+  .details-title {
+    font-size: 1.3rem;
+  }
+
+  .characteristic-tag {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .taste-label {
+    font-size: 0.9rem;
+  }
+}
+
+================================================================================
+File: ./css/taste.css
+================================================================================
+
+.taste-profile-section {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 30px 0;
+  }
+  
+  .taste-profile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 20px;
+  }
+  
+  .taste-characteristic {
+    width: 100%;
+  }
+  
+  .taste-header {
+    margin-bottom: 8px;
+  }
+  
+  .taste-label {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1em;
+  }
+  
+  .taste-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .taste-label-left,
+  .taste-label-right {
+    font-size: 0.9em;
+    color: #666;
+    min-width: 70px;
+  }
+  
+  .taste-label-left {
+    text-align: right;
+  }
+  
+  .taste-bar-wrapper {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #E0E0E0;
+    border-radius: 4px;
+    position: relative;
+  }
+  
+  .taste-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #722F37 0%, #8B3741 100%);
+    border-radius: 4px;
+    position: relative;
+    transition: width 0.3s ease;
+  }
+  
+  .taste-bar-indicator {
+    width: 16px;
+    height: 16px;
+    background-color: #722F37;
+    border: 3px solid white;
+    border-radius: 50%;
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+================================================================================
+File: ./css/base.css
+================================================================================
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.product-list {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 300px;
+    background: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    z-index: 1001;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .product-list.open {
+    transform: translateX(0);
+  }
+
+================================================================================
+File: ./css/countdown.css
+================================================================================
+
+#countdown {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: calc(2rem + 2vw);
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#countdown span {
+    font-size: 0.5em;
+    color: #666;
+}
+
+================================================================================
+File: ./css/map.css
+================================================================================
+
+#map {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    z-index: 1;
+}
+
+.map-legend {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    background: white;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    font-size: 12px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+  }
+  
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid white;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+  }
+
+.custom-marker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-marker div {
+    transform: translate(-50%, -50%);
+}

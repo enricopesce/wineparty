@@ -256,13 +256,10 @@ function formatTasteProfile(tasteProfile) {
 }
 
 function updateMarkers() {
-  console.log("updateMarkers called");
   if (!map) {
     console.error("Map not initialized!");
     return;
   }
-
-  console.log("Current wineries:", wineries);
 
   map.eachLayer((layer) => {
     if (layer instanceof L.Marker) {
@@ -271,20 +268,14 @@ function updateMarkers() {
   });
 
   wineries.forEach((winery) => {
-    console.log(
-      "Creating marker for:",
-      winery.name,
-      "at coordinates:",
-      winery.coordinates
-    );
-
     const marker = L.marker(winery.coordinates, {
-      icon: createCustomIcon(winery.type),
+      icon: createCustomIcon(winery.type, winery.image)
     });
 
     marker.bindTooltip(winery.name, {
       permanent: false,
       direction: "top",
+      offset: [0, -60]
     });
 
     marker.on("click", () => showDetails(winery));
@@ -292,31 +283,44 @@ function updateMarkers() {
   });
 }
 
-function createCustomIcon(type) {
-  console.log(
-    "Creating icon for type:",
-    type,
-    "with color:",
-    markerColors[type]
-  );
-
+function createCustomIcon(type, imageUrl) {
   return L.divIcon({
-    className: "custom-marker",
-    html: `<div style="
-      position: absolute;
-      background-color: ${markerColors[type]};
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      border: 2px solid white;
-      box-shadow: 0 0 4px rgba(0,0,0,0.5);
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      "></div>`,
-    iconSize: [25, 25],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, -12],
+    className: 'custom-marker',
+    html: `
+      <div style="
+        position: relative;
+        width: 60px;
+        height: 80px;
+      ">
+        <img src="${imageUrl}" style="
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: 2px solid white;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+          background-color: white;
+          object-fit: cover;
+        ">
+        <div style="
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: ${markerColors[type]};
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          border: 2px solid white;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        "></div>
+      </div>`,
+    iconSize: [60, 80],
+    iconAnchor: [30, 80],
+    popupAnchor: [0, -70]
   });
 }
 

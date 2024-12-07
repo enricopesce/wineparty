@@ -112,8 +112,36 @@ function toggleView() {
 
 function toggleProductList() {
   const list = document.querySelector(".product-list");
+  const map = document.getElementById("map");
+  
   list.classList.toggle("open");
+  
+  // Adjust map position when menu is open on mobile
+  if (window.innerWidth < 1024) {
+    if (list.classList.contains("open")) {
+      map.style.transform = "translateX(300px)";
+    } else {
+      map.style.transform = "translateX(0)";
+    }
+  }
 }
+
+// Add resize handler to reset styles on window resize
+window.addEventListener('resize', () => {
+  const list = document.querySelector(".product-list");
+  const map = document.getElementById("map");
+  
+  if (window.innerWidth >= 1024) {
+    map.style.transform = "";
+    list.classList.remove("open");
+  } else {
+    if (list.classList.contains("open")) {
+      map.style.transform = "translateX(300px)";
+    } else {
+      map.style.transform = "translateX(0)";
+    }
+  }
+});
 
 function filterProducts() {
   const searchTerm = document.querySelector(".search-input").value.toLowerCase();

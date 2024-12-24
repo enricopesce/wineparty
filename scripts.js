@@ -3,9 +3,9 @@ const countdownElement = document.getElementById("countdown");
 const mapElement = document.getElementById("map");
 
 const markerColors = {
-  bianco: "#FFD700", // Oro per i vini bianchi
-  spumante: "#87CEEB", // Azzurro per gli spumanti
-  spirits: "#9370DB", // Viola per gli spirits
+  bianco: "#FFD700",
+  spumante: "#87CEEB", 
+  spirits: "#9370DB"
 };
 
 const characteristicColors = {
@@ -35,7 +35,7 @@ const characteristicColors = {
 };
 
 const getTasteDescription = {
-  // Wine characteristics
+  // Profilo vini
   dolcezza: (value) => ({
     label: "Dolcezza",
     left: "Secco",
@@ -50,29 +50,54 @@ const getTasteDescription = {
   }),
   corpo: (value) => ({
     label: "Corpo",
-    left: "Leggero",
+    left: "Leggero", 
     right: "Strutturato",
     value: value * 20,
   }),
   persistenza: (value) => ({
     label: "Persistenza",
     left: "Breve",
-    right: "Lunga",
+    right: "Lunga", 
     value: value * 20,
   }),
-  // Spirits characteristics
+  tannicità: (value) => ({
+    label: "Tannicità",
+    left: "Bassa",
+    right: "Alta",
+    value: value * 20,
+  }),
+  effervescenza: (value) => ({
+    label: "Effervescenza", 
+    left: "Ferma",
+    right: "Spumante",
+    value: value * 20,
+  }),
   sapidità: (value) => ({
     label: "Sapidità",
-    left: "Delicato",
-    right: "Intenso",
+    left: "Delicata",
+    right: "Intensa",
     value: value * 20,
   }),
+  equilibrio: (value) => ({
+    label: "Equilibrio",
+    left: "Sbilanciato",
+    right: "Armonico",
+    value: value * 20,
+  }),
+  
+  // Profilo spirits
   intensità: (value) => ({
     label: "Intensità",
     left: "Leggera",
     right: "Forte",
     value: value * 20,
   }),
+  complessità: (value) => ({
+    label: "Complessità",
+    left: "Semplice",
+    right: "Complesso",
+    value: value * 20,
+  })
 };
 
 function getCharacteristicColor(characteristic) {
@@ -505,6 +530,31 @@ function showDetails(winery) {
   const ingredients =
     winery.type === "spirits" ? winery.botanicals : winery.grapes;
 
+  // Aggiungiamo la sezione degli abbinamenti
+  const foodPairingSection = winery.food_pairing ? `
+    <div class="food-pairing-section">
+      <h3 class="section-title">Abbinamenti Consigliati</h3>
+      <div class="food-pairing-content">
+        <div class="pairing-group">
+          <h4>Ideale con:</h4>
+          <ul class="pairing-list">
+            ${winery.food_pairing.ideale.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="pairing-group">
+          <h4>Altri abbinamenti:</h4>
+          <ul class="pairing-list">
+            ${winery.food_pairing.consigliato.map(item => `<li>${item}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="serving-info">
+          <p><strong>Temperatura di servizio:</strong> ${winery.food_pairing.temperatura_servizio}</p>
+          <p><strong>Calice consigliato:</strong> ${winery.food_pairing.calice_consigliato}</p>
+        </div>
+      </div>
+    </div>
+  ` : '';
+
   content.innerHTML = `
     <div class="wine-header">
       <div class="wine-image-container">
@@ -574,6 +624,8 @@ function showDetails(winery) {
     <div class="details-description">
       ${winery.description}
     </div>
+
+    ${foodPairingSection}
   `;
 
   panel.classList.add("open");

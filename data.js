@@ -7,25 +7,29 @@ const wineries = [
     location: "Alto Adige",
     city: "Montagna, BZ",
     coordinates: [46.4102, 11.3548],
-    description: "Un vino che incarna l'essenza delle Dolomiti, il Manna di Franz Haas è una magistrale fusione di quattro vitigni che dona vita a un bianco di straordinaria complessità. Al naso si apre con eleganti note floreali di tiglio e gelsomino, accompagnate da sentori di frutta a polpa bianca e delicate sfumature agrumate. La fermentazione in barrique per Chardonnay e Sauvignon conferisce struttura e profondità, mentre la vinificazione in acciaio di Riesling e Traminer preserva freschezza e aromaticità. Al palato si presenta ampio e avvolgente, con una notevole struttura bilanciata da una vivace mineralità dolomitica. Il finale è lungo e persistente, con un raffinato ritorno di note fruttate e minerali. Perfetto con piatti di pesce strutturati come un rombo al forno con patate, risotto ai frutti di mare, o con carni bianche come il cappone ripieno. Eccellente anche con formaggi di media stagionatura dell'Alto Adige. Ha ottenuto i Tre Bicchieri del Gambero Rosso 2023, confermando la sua eccellenza nel panorama italiano. Il punteggio di 95/100 da Wine Advocate e 94/100 da James Suckling ne attestano il livello internazionale.",
+    description: "Un vino di straordinaria eleganza che rappresenta l'apice dell'enologia altoatesina. Al naso si presenta con un bouquet ampio e stratificato: le note floreali di tiglio e biancospino si intrecciano con sentori di pesca bianca, litchi e pompelmo. La componente minerale, tipica dei terreni dolomitici, emerge con eleganti note di pietra focaia e grafite. L'affinamento in barrique conferisce al Chardonnay e al Sauvignon complessità aromatica con delicate note vanigliate e di pan brioche, mentre la vinificazione in acciaio di Riesling e Traminer preserva la verticalità e la tensione aromatica. Al palato mostra una struttura monumentale ma perfettamente equilibrata, sostenuta da una freschezza vibrante e una sapidità pronunciata. Il finale, estremamente persistente, rivela un'elegante progressione di agrumi canditi, spezie dolci e sensazioni salmastre. La temperatura di servizio ideale è 10-12°C, preferibilmente in calici ampi tipo Borgogna per apprezzarne la complessa evoluzione aromatica.",
     image: "imgs/Franz Haas.jpg",
     type: "bianco",
     website: "www.franz-haas.it",
     characteristics: {
-      primary: ["floreale", "strutturato"],
-      secondary: ["minerale", "agrumato"],
+      primary: ["floreale", "minerale"],
+      secondary: ["fruttato", "speziato"],
       intensity: {
         floreale: 5,
-        strutturato: 4,
-        minerale: 3,
-        agrumato: 2
+        minerale: 4,
+        fruttato: 4,
+        speziato: 3
       }
     },
     taste_profile: {
       dolcezza: 2,
-      acidità: 3,
+      acidità: 4,
       corpo: 4,
-      persistenza: 4
+      persistenza: 5,
+      tannicità: 0,
+      effervescenza: 0,
+      sapidità: 4,
+      equilibrio: 5
     },
     awards: [
       "Tre Bicchieri Gambero Rosso 2023",
@@ -33,7 +37,21 @@ const wineries = [
       "94/100 James Suckling"
     ],
     grapes: ["Riesling", "Chardonnay", "Traminer Aromatico", "Sauvignon Blanc"],
-    aging: "10 mesi sui lieviti"
+    aging: "10 mesi sui lieviti",
+    food_pairing: {
+      ideale: [
+        "Risotto agli asparagi",
+        "Pesce al forno con erbe aromatiche",
+        "Carni bianche delicate"
+      ],
+      consigliato: [
+        "Formaggi freschi di malga",
+        "Crostacei alla griglia",
+        "Primi piatti con funghi porcini"
+      ],
+      temperatura_servizio: "10-12°C",
+      calice_consigliato: "Borgogna grande"
+    }
   },
   {
     name: "Villa Bucci",
@@ -41,7 +59,7 @@ const wineries = [
     location: "Marche",
     city: "Ostra Vetere, AN",
     coordinates: [43.4724, 13.2463],
-    description: "Questo Verdicchio rappresenta l'eccellenza delle Marche e la maestria di Villa Bucci nella vinificazione biologica. Al naso si sviluppa un bouquet intenso e complesso, dove spiccano note di frutta gialla matura, mandorla fresca e delicati sentori di fiori bianchi. La mineralità, tipica del terroir, si esprime con eleganti note salmastre. Al palato colpisce per la sua straordinaria freschezza e sapidità, perfettamente bilanciate da una struttura importante. Il finale è lungo e persistente, caratterizzato dal tipico retrogusto ammandorlato del Verdicchio. Ideale con piatti della tradizione marchigiana come il brodetto di pesce all'anconetana, ma anche con primi piatti a base di pesce come gli spaghetti alle vongole. Eccellente con pesci al forno e crostacei alla griglia. Premiato con i Tre Bicchieri del Gambero Rosso 2023, 93/100 da Wine Enthusiast e la Corona Vinibuoni d'Italia, confermandosi come riferimento assoluto per la denominazione.",
+    description: "Un Verdicchio che rappresenta la quintessenza del terroir marchigiano, frutto di viticoltura biologica e di una profonda comprensione del vitigno. Al naso si sviluppa con maestosa complessità: il bouquet si apre con note di pesca gialla, albicocca matura e mandorla fresca, evolvendosi verso sentori di camomilla, finocchio selvatico e timo. La componente minerale, derivata dai suoli calcareo-argillosi, si esprime attraverso intense note di pietra bagnata e iodio. L'attacco al palato è di straordinaria freschezza, bilanciata da una struttura glicerica importante e una sapidità marina che conferisce profondità. La persistenza è notevole, caratterizzata dal tipico finale ammandorlato del Verdicchio, arricchito da ritorni agrumati e speziati. L'evoluzione nel bicchiere rivela continuamente nuove sfaccettature aromatiche. Temperatura di servizio consigliata 12-14°C in calici ampi per permettere la piena espressione aromatica.",
     image: "imgs/Villa Bucci.jpg",
     type: "bianco",
     website: "www.villabucci.com",
@@ -50,16 +68,20 @@ const wineries = [
       secondary: ["mandorlato", "floreale"],
       intensity: {
         fruttato: 5,
-        minerale: 4,
+        minerale: 5,
         mandorlato: 3,
-        floreale: 2
+        floreale: 4
       }
     },
     taste_profile: {
       dolcezza: 1,
       acidità: 4,
       corpo: 3,
-      persistenza: 4
+      persistenza: 4,
+      tannicità: 0,
+      effervescenza: 0,
+      sapidità: 5,
+      equilibrio: 4
     },
     awards: [
       "Tre Bicchieri Gambero Rosso 2023",
@@ -67,7 +89,21 @@ const wineries = [
       "Corona Vinibuoni d'Italia"
     ],
     grapes: ["Verdicchio"],
-    aging: "6 mesi in acciaio"
+    aging: "6 mesi in acciaio",
+    food_pairing: {
+      ideale: [
+        "Brodetto di pesce all'anconetana",
+        "Baccalà in potacchio",
+        "Coniglio in porchetta"
+      ],
+      consigliato: [
+        "Olive all'ascolana",
+        "Frutti di mare gratinati",
+        "Formaggi di media stagionatura"
+      ],
+      temperatura_servizio: "12-14°C",
+      calice_consigliato: "Borgogna medio"
+    }
   },
   {
     name: "Masciarelli",
@@ -80,20 +116,24 @@ const wineries = [
     type: "bianco",
     website: "www.masciarelli.it",
     characteristics: {
-      primary: ["fruttato", "fresco"],
-      secondary: ["floreale", "minerale"],
+      primary: ["fruttato", "minerale"],
+      secondary: ["floreale", "agrumato"],
       intensity: {
         fruttato: 4,
-        fresco: 5,
+        minerale: 4,
         floreale: 3,
-        minerale: 2
+        agrumato: 5
       }
     },
     taste_profile: {
       dolcezza: 2,
       acidità: 4,
       corpo: 3,
-      persistenza: 3
+      persistenza: 3,
+      tannicità: 0,
+      effervescenza: 0,
+      sapidità: 4,
+      equilibrio: 4
     },
     awards: [
       "Quattro Viti Associazione Italiana Sommelier",
@@ -114,20 +154,24 @@ const wineries = [
     type: "bianco",
     website: "www.cantinadisantadi.it",
     characteristics: {
-      primary: ["fruttato", "agrumato"],
-      secondary: ["minerale", "floreale"],
+      primary: ["agrumato", "minerale"],
+      secondary: ["floreale", "fruttato"],
       intensity: {
-        fruttato: 4,
         agrumato: 5,
-        minerale: 3,
-        floreale: 2
+        minerale: 4,
+        floreale: 3,
+        fruttato: 4
       }
     },
     taste_profile: {
       dolcezza: 2,
       acidità: 4,
       corpo: 3,
-      persistenza: 4
+      persistenza: 4,
+      tannicità: 0,
+      effervescenza: 0,
+      sapidità: 5,
+      equilibrio: 4
     },
     awards: [
       "Medaglia d'Oro Concours Mondial Bruxelles",
@@ -148,20 +192,24 @@ const wineries = [
     type: "bianco",
     website: "www.pieropan.it",
     characteristics: {
-      primary: ["fruttato", "floreale"],
-      secondary: ["minerale", "mandorlato"],
+      primary: ["floreale", "minerale"],
+      secondary: ["fruttato", "mandorlato"],
       intensity: {
-        fruttato: 5,
-        floreale: 4,
-        minerale: 3,
-        mandorlato: 2
+        floreale: 5,
+        minerale: 4,
+        fruttato: 4,
+        mandorlato: 3
       }
     },
     taste_profile: {
       dolcezza: 2,
       acidità: 4,
-      corpo: 3,
-      persistenza: 4
+      corpo: 4,
+      persistenza: 4,
+      tannicità: 0,
+      effervescenza: 0,
+      sapidità: 4,
+      equilibrio: 5
     },
     awards: [
       "Tre Bicchieri Gambero Rosso 2023",
@@ -182,20 +230,24 @@ const wineries = [
     type: "bianco",
     website: "vignetimassa.com",
     characteristics: {
-      primary: ["minerale", "floreale"],
+      primary: ["minerale", "fruttato"],
       secondary: ["agrumato", "speziato"],
       intensity: {
         minerale: 5,
-        floreale: 4,
+        fruttato: 4,
         agrumato: 3,
-        speziato: 2
+        speziato: 3
       }
     },
     taste_profile: {
       dolcezza: 1,
       acidità: 4,
       corpo: 4,
-      persistenza: 5
+      persistenza: 5,
+      tannicità: 1,
+      effervescenza: 0,
+      sapidità: 5,
+      equilibrio: 5
     },
     awards: [
       "Tre Bicchieri Gambero Rosso 2023",
@@ -222,14 +274,18 @@ const wineries = [
         minerale: 5,
         aromatico: 4,
         floreale: 3,
-        agrumato: 3
+        agrumato: 4
       }
     },
     taste_profile: {
       dolcezza: 2,
       acidità: 4,
       corpo: 3,
-      persistenza: 4
+      persistenza: 4,
+      tannicità: 1,
+      effervescenza: 0,
+      sapidità: 5,
+      equilibrio: 4
     },
     awards: [
       "5 Grappoli Bibenda",
@@ -256,14 +312,18 @@ const wineries = [
         fruttato: 4,
         cremoso: 5,
         floreale: 3,
-        "crosta di pane": 4
+        "crosta di pane": 5
       }
     },
     taste_profile: {
       dolcezza: 2,
       acidità: 4,
       corpo: 3,
-      persistenza: 4
+      persistenza: 4,
+      tannicità: 0,
+      effervescenza: 5,
+      sapidità: 3,
+      equilibrio: 5
     },
     awards: [
       "4 Sfere Sparkle",
@@ -271,7 +331,21 @@ const wineries = [
       "Corona Vinibuoni d'Italia"
     ],
     grapes: ["Pinot Nero"],
-    aging: "36 mesi sui lieviti"
+    aging: "36 mesi sui lieviti",
+    food_pairing: {
+      ideale: [
+        "Ostriche crude",
+        "Carpaccio di capesante",
+        "Salmone affumicato scozzese"
+      ],
+      consigliato: [
+        "Finger food di pesce",
+        "Formaggi freschi caprini",
+        "Ceviche di pesce bianco"
+      ],
+      temperatura_servizio: "8-10°C",
+      calice_consigliato: "Coppa cocktail ghiacciata"
+    }
   },
   {
     name: "Puiatti",
@@ -285,19 +359,23 @@ const wineries = [
     website: "www.puiatti.com",
     characteristics: {
       primary: ["floreale", "fresco"],
-      secondary: ["fruttato", "minerale"],
+      secondary: ["fruttato", "crosta di pane"],
       intensity: {
         floreale: 4,
         fresco: 5,
-        fruttato: 3,
-        minerale: 3
+        fruttato: 4,
+        "crosta di pane": 3
       }
     },
     taste_profile: {
       dolcezza: 2,
       acidità: 4,
       corpo: 3,
-      persistenza: 4
+      persistenza: 4,
+      tannicità: 0,
+      effervescenza: 5,
+      sapidità: 4,
+      equilibrio: 4
     },
     awards: [
       "Due Bicchieri Gambero Rosso",
@@ -307,38 +385,66 @@ const wineries = [
     grapes: ["Ribolla Gialla"],
     aging: "20-24 mesi sui lieviti"
   },
-  // {
-  //   name: "Isle of Harris",
-  //   wine: "Gin",
-  //   location: "Isole Ebridi, Scozia",
-  //   city: "Tarbert, Isle of Harris",
-  //   coordinates: [57.9914, -6.8583],
-  //   description: "Un gin artigianale che cattura l'essenza delle Ebridi scozzesi. La presenza del Sugar Kelp tra le botaniche conferisce un carattere unico e distintivo. Al naso si apre con fresche note di ginepro e agrumi, arricchite da sentori marini e delicate sfumature floreali. Perfetto per gin tonic premium con guarnizioni di agrumi e erbe aromatiche. Ideale anche per cocktail raffinati come il Martini dry con twist di limone o il Negroni. Si sposa bene con antipasti di pesce crudo e ostriche. Double Gold San Francisco World Spirits Competition 2023, Best Scottish Gin ai World Gin Awards e Gold all'International Wine & Spirit Competition.",
-  //   image: "imgs/Isle of Harris.jpg",
-  //   type: "spirits",
-  //   website: "www.harrisdistillery.com",
-  //   characteristics: {
-  //     primary: ["agrumato", "marino"],
-  //     secondary: ["speziato", "floreale"],
-  //     intensity: {
-  //       agrumato: 5,
-  //       marino: 4,
-  //       speziato: 3,
-  //       floreale: 2
-  //     }
-  //   },
-  //   taste_profile: {
-  //     dolcezza: 1,
-  //     sapidità: 4,
-  //     intensità: 4,
-  //     persistenza: 5
-  //   },
-  //   awards: [
-  //     "Double Gold San Francisco World Spirits Competition 2023",
-  //     "Best Scottish Gin - World Gin Awards",
-  //     "Gold - International Wine & Spirit Competition"
-  //   ],
-  //   botanicals: ["Sugar Kelp", "Ginepro", "Coriandolo", "Angelica", "Scorza d'arancia", "Scorza di lime", "Cubebe", "Cassia", "Radice di iris"],
-  //   distillation: "Alambicco di rame"
-  // }
+  {
+    name: "Isle of Harris",
+    wine: "Gin",
+    location: "Isole Ebridi, Scozia",
+    city: "Tarbert, Isle of Harris",
+    coordinates: [57.9914, -6.8583],
+    description: "Un gin artigianale eccezionale che incarna l'anima selvaggia delle Ebridi scozzesi. La botanica distintiva del Sugar Kelp, raccolta sostenibilmente dalle acque cristalline dell'isola, conferisce un carattere marino unico e inconfondibile. Al naso si sviluppa un'armoniosa sinfonia di ginepro fresco e agrumi succosi, accompagnata da intriganti note marine e delicate sfumature floreali che evocano la brezza costiera. Il palato rivela strati complessi di sapori: il ginepro domina inizialmente, seguito da note agrumate vivaci e un'elegante mineralità marina. Perfetto per gin tonic premium con guarnizioni di agrumi freschi e rametti di rosmarino locale. Eccelle in cocktail raffinati come il Martini dry con twist di limone o il Negroni contemporaneo. Si sposa magnificamente con frutti di mare crudi, in particolare ostriche e carpacci. La distillazione in piccoli lotti in alambicchi di rame tradizionali garantisce un controllo qualitativo eccezionale.",
+    image: "imgs/Isle of Harris.jpg",
+    type: "spirits",
+    website: "www.harrisdistillery.com",
+    characteristics: {
+      primary: ["agrumato", "marino"],
+      secondary: ["speziato", "floreale", "erbaceo"],
+      intensity: {
+        agrumato: 5,
+        marino: 4,
+        speziato: 3,
+        floreale: 2,
+        erbaceo: 3
+      }
+    },
+    taste_profile: {
+      dolcezza: 1,
+      sapidità: 5,
+      intensità: 4,
+      persistenza: 5,
+      complessità: 4
+    },
+    awards: [
+      "Double Gold San Francisco World Spirits Competition 2023",
+      "Best Scottish Gin - World Gin Awards",
+      "Gold - International Wine & Spirit Competition",
+      "Master Medal - The Gin Masters 2023"
+    ],
+    botanicals: [
+      "Sugar Kelp delle Ebridi",
+      "Ginepro selezionato",
+      "Coriandolo biologico",
+      "Angelica",
+      "Scorza d'arancia siciliana",
+      "Scorza di lime",
+      "Cubebe indonesiano",
+      "Cassia",
+      "Radice di iris toscano"
+    ],
+    distillation: "Alambicco tradizionale in rame, distillazione in piccoli lotti",
+    sustainability: "Raccolta sostenibile delle alghe, packaging eco-friendly, energia rinnovabile",
+    food_pairing: {
+      ideale: [
+        "Ostriche crude",
+        "Carpaccio di capesante",
+        "Salmone affumicato scozzese"
+      ],
+      consigliato: [
+        "Finger food di pesce",
+        "Formaggi freschi caprini",
+        "Ceviche di pesce bianco"
+      ],
+      temperatura_servizio: "8-10°C",
+      calice_consigliato: "Coppa cocktail ghiacciata"
+    }
+  }
 ];

@@ -502,3 +502,42 @@
     font-size: 0.9rem;
   }
 }
+
+.food-pairing-section {
+  background: rgba(248, 248, 248, 0.7);
+  padding: 20px;
+  border-radius: 15px;
+  margin: 20px 0;
+}
+
+.food-pairing-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pairing-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.pairing-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.pairing-list li {
+  background: #722F37;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.serving-info p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: #444;
+}
